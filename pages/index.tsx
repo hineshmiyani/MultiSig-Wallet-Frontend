@@ -1,40 +1,16 @@
 import type { NextPage } from "next";
-import { useEtherBalance, useEthers } from "@usedapp/core";
-import { Container } from "@mui/material";
-import { Login, Header, Main, Loader } from "../components";
+import { useEthers } from "@usedapp/core";
+import { Loader, Main } from "../components";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
-  const { account, chainId, isLoading } = useEthers();
-  const etherBalance = useEtherBalance(account);
+  const { account, isLoading } = useEthers();
 
-  // console.log({
-  //   account,
-  //   chainId,
-  //   etherBalance,
-  // });
-
-  if (!account) return <Login />;
   if (isLoading) return <Loader />;
   return (
     <>
-      {/* Header */}
-      <Header />
-
-      <Container
-        maxWidth={false}
-        sx={{
-          minHeight: "100vh",
-          backgroundColor: "secondary.contrastText",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* Main Ctn */}
-        <Main />
-
-        {/* Footer */}
-        {/* <Footer /> */}
-      </Container>
+      <Main />
     </>
   );
 };

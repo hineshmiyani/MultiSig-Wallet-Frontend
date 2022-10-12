@@ -36,7 +36,6 @@ const AccountDialog = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
-    deactivate();
   };
 
   return (
@@ -176,14 +175,17 @@ const AccountDialog = () => {
         <Box sx={{ m: "20px 20px 12px" }}>
           <Button
             sx={{
-              backgroundColor: "red",
+              backgroundColor: "primary.buttonColor",
               color: "primary.contrastText",
               width: "100%",
               "&:hover": {
-                backgroundColor: "red",
+                backgroundColor: "primary.buttonColor",
               },
             }}
-            onClick={handleClose}
+            onClick={() => {
+              handleClose();
+              deactivate();
+            }}
           >
             Disconnect
           </Button>

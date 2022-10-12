@@ -11,12 +11,12 @@ declare module "@mui/material/styles" {
     disabled: PaletteOptions["primary"];
   }
 
-  // interface PaletteColor {
-  //   emeraldText?: string;
-  // }
-  // interface SimplePaletteColorOptions {
-  //   emeraldText?: string;
-  // }
+  interface PaletteColor {
+    buttonColor?: string;
+  }
+  interface SimplePaletteColorOptions {
+    buttonColor?: string;
+  }
 }
 // Update the Button's color prop options
 declare module "@mui/material/Button" {
@@ -37,6 +37,7 @@ export const theme = createTheme({
       main: "#374151",
       dark: "#",
       contrastText: "#ffffff",
+      buttonColor: "#f02525",
     },
     secondary: {
       main: "#020202",

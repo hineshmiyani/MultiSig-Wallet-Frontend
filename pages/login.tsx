@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { useEthers } from "@usedapp/core";
 import { Button, Container, Stack, Typography } from "@mui/material";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const { activateBrowserWallet, account } = useEthers();
+  const router = useRouter();
+  const { redirect_url } = router.query;
 
-  console.log("account", account);
+  useEffect(() => {
+    if (account) {
+      if (redirect_url) {
+        router.push(`/${redirect_url}`);
+      } else {
+        router.push(`/`);
+      }
+    }
+  }, [account]);
 
   return (
     <>

@@ -30,10 +30,7 @@ const Review = () => {
           <Typography variant="body1" mb={3}>
             Details
           </Typography>
-          <Typography variant="caption">Name of new Wallet</Typography>
-          <Typography variant="body2" mb={3} fontWeight="500">
-            www
-          </Typography>
+
           <Typography variant="caption">
             Any transaction requires the confirmation of:
           </Typography>

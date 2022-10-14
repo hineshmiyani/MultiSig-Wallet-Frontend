@@ -15,16 +15,20 @@ import AddOwners from "./AddOwners";
 import Review from "./Review";
 import { customStepperConnector, customStepperStyles } from "../../theme";
 
-const steps = ["Connect Wallet", "Name", "Owners and Confirmations", "Review"];
+const steps = [
+  "Connect Wallet",
+  /* "Name", */ "Owners and Confirmations",
+  "Review",
+];
 const getStepDescription = (step: number) => {
   switch (step) {
     case 0:
       return <ConnectWallet />;
+    // case 1:
+    //   return <NameOfWallet />;
     case 1:
-      return <NameOfWallet />;
-    case 2:
       return <AddOwners />;
-    case 3:
+    case 2:
       return <Review />;
   }
 };

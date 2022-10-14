@@ -20,7 +20,7 @@ const Welcome = (props: Props) => {
   const router = useRouter();
   return (
     <>
-      <Container maxWidth={false}>
+      <Container maxWidth="lg">
         <Typography
           variant="h3"
           sx={{
@@ -52,17 +52,13 @@ const Welcome = (props: Props) => {
             maxWidth: "fit-content",
             borderRadius: "8px",
             boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-            height: "250px",
           }}
         >
           <Card
             sx={{
-              maxWidth: 424.5,
-              borderRadius: "8px 0 0 8px",
+              maxWidth: "800px",
+              borderRadius: "8px",
               boxShadow: "0",
-              display: "flex",
-              justifyContent: "space-between",
-              flexDirection: "column",
             }}
           >
             <CardContent sx={{ p: "24px 24px 0" }}>
@@ -91,48 +87,6 @@ const Welcome = (props: Props) => {
                 onClick={() => router.push("/create")}
               >
                 Create new Wallet
-              </Button>
-            </CardActions>
-          </Card>
-
-          <Divider orientation="vertical" flexItem />
-
-          <Card
-            sx={{
-              maxWidth: 424.5,
-              borderRadius: "0 8px 8px 0",
-              boxShadow: "0",
-              display: "flex",
-              justifyContent: "space-between",
-              flexDirection: "column",
-            }}
-          >
-            <CardContent sx={{ p: "24px 24px 0" }}>
-              <Typography gutterBottom variant="h5" sx={{ fontWeight: "bold" }}>
-                Load Existing Safe
-              </Typography>
-              <Typography variant="body1">
-                Already have a Wallet or want to access it from a different
-                device? Easily load your Wallet using your MultiSig Wallet
-                address.
-              </Typography>
-            </CardContent>
-            <CardActions sx={{ p: "30px 24px" }}>
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "primary.buttonColor",
-                  borderColor: "primary.buttonColor",
-                  p: "8px 12px",
-                  "&:hover": {
-                    backgroundColor: "primary.buttonColor",
-                    color: "primary.contrastText",
-                    borderColor: "primary.buttonColor",
-                  },
-                }}
-                startIcon={<AccountBalanceWalletOutlined />}
-              >
-                Add existing Wallet
               </Button>
             </CardActions>
           </Card>

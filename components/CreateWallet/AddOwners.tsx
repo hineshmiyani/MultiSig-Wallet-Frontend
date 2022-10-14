@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Box,
@@ -17,17 +17,65 @@ import {
   Tooltip,
 } from "@mui/material";
 import { useEthers } from "@usedapp/core";
-import { Add, Delete, DeleteOutline } from "@mui/icons-material";
+import { Add, DeleteOutline } from "@mui/icons-material";
 
 const AddOwners = () => {
   const { library } = useEthers();
-  const [ownerCount, setOwnerCount] = useState<number>(1);
+  const [ownerCount, setOwnerCount] = useState<number>(() => {
+    if (localStorage.getItem("ownersData")) {
+      const { ownersList } = JSON.parse(
+        localStorage.getItem("ownersData") || ""
+      );
+      return ownersList.length;
+    }
+    return 1;
+  });
+  const [ownersList, setOwnersList] = useState<any[]>(() => {
+    if (localStorage.getItem("ownersData")) {
+      const { ownersList } = JSON.parse(
+        localStorage.getItem("ownersData") || ""
+      );
+      return ownersList;
+    }
+    return [];
+  });
 
-  const [requiredConfirmations, setRequiredConfirmations] =
-    useState<string>("1");
+  const [requiredConfirmations, setRequiredConfirmations] = useState<string>(
+    () => {
+      if (localStorage.getItem("ownersData")) {
+        const { requiredConfirmations } = JSON.parse(
+          localStorage.getItem("ownersData") || ""
+        );
+        return requiredConfirmations;
+      }
+      return "1";
+    }
+  );
 
   const handleChange = (event: SelectChangeEvent) => {
-    setRequiredConfirmations(event.target.value as string);
+    setRequiredConfirmations(event.target.value.toString());
+  };
+
+  useEffect(() => {
+    console.log({ ownersList, requiredConfirmations, ownerCount });
+
+    return () => {
+      localStorage.setItem(
+        "ownersData",
+        JSON.stringify({
+          ownersList,
+          requiredConfirmations,
+        })
+      );
+    };
+  }, [ownersList, requiredConfirmations]);
+
+  const handleOwnersList = (e: any, index: any) => {
+    setOwnersList((prevOwnersList) => {
+      let newList = [...prevOwnersList];
+      newList[index] = e.target.value;
+      return newList;
+    });
   };
 
   return (
@@ -83,17 +131,15 @@ const AddOwners = () => {
           .fill("")
           .map((val: string, index: number) => (
             <Stack direction="row" key={index} mb={2.5} alignItems="center">
-              <TextField
-                label="Owner Name"
-                color="error"
-                variant="outlined"
-                sx={{
-                  maxWidth: "22.9%",
-                  flexBasis: "22.9%",
-                }}
-                placeholder="Owner Name"
-                InputLabelProps={{ shrink: true }}
-              />
+              <Typography
+                variant="body1"
+                my={1}
+                maxWidth="22.9%"
+                flexBasis="22.9%"
+                textAlign="left"
+              >
+                Owner {index + 1}
+              </Typography>
               <TextField
                 label="Owner Address"
                 color="error"
@@ -106,7 +152,8 @@ const AddOwners = () => {
                 }}
                 placeholder="Owner Address*"
                 InputLabelProps={{ shrink: true }}
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                value={ownersList[index]}
+                onChange={(e) => handleOwnersList(e, index)}
               />
               {index !== 0 && (
                 <Tooltip title="Delete" placement="top">
@@ -114,9 +161,14 @@ const AddOwners = () => {
                     aria-label="delete"
                     size="medium"
                     sx={{ ml: 1 }}
-                    onClick={() =>
-                      setOwnerCount((prevOwnerCount) => prevOwnerCount - 1)
-                    }
+                    onClick={() => {
+                      setOwnerCount((prevOwnerCount) => prevOwnerCount - 1);
+                      setOwnersList((prevOwnersList) =>
+                        prevOwnersList.filter(
+                          (owner, ownerIndex) => ownerIndex !== index
+                        )
+                      );
+                    }}
                   >
                     <DeleteOutline fontSize="medium" />
                   </IconButton>
@@ -161,6 +213,8 @@ const AddOwners = () => {
           out of {ownerCount} owner(s)
         </Typography>
       </Box>
+
+      {/* <pre>{JSON.stringify(ownersData)}</pre> */}
     </Paper>
   );
 };

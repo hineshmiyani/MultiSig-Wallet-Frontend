@@ -11,10 +11,10 @@ const Login = () => {
 
   useEffect(() => {
     if (account) {
-      if (redirect_url) {
+      if (redirect_url && !redirect_url.includes("login")) {
         router.push(`${redirect_url}`);
       } else {
-        router.push(`/`);
+        router.push("/");
       }
     }
   }, [account]);

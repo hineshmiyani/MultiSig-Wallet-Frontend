@@ -68,22 +68,10 @@ const AddOwners = () => {
       <Divider />
 
       <Stack direction="row" px={3}>
-        <Typography
-          variant="body2"
-          component="p"
-          my={1}
-          maxWidth="26%"
-          flexBasis="26%"
-        >
+        <Typography variant="body2" my={1} maxWidth="26%" flexBasis="26%">
           Name
         </Typography>
-        <Typography
-          variant="body2"
-          component="p"
-          my={1}
-          maxWidth="58%"
-          flexBasis="58%"
-        >
+        <Typography variant="body2" my={1} maxWidth="58%" flexBasis="58%">
           Address
         </Typography>
       </Stack>
@@ -151,7 +139,7 @@ const AddOwners = () => {
       </Box>
 
       <Box p={3}>
-        <Typography variant="body2" component="p" mb={1.5}>
+        <Typography variant="body2" mb={1.5}>
           Any transaction requires the confirmation of:
         </Typography>
 
@@ -169,7 +157,7 @@ const AddOwners = () => {
               </MenuItem>
             ))}
         </Select>
-        <Typography variant="body2" ml={1}>
+        <Typography variant="body2" component="span" ml={1}>
           out of {ownerCount} owner(s)
         </Typography>
       </Box>

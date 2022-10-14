@@ -1,34 +1,121 @@
-import { Paper, Typography, Chip, Box } from "@mui/material";
+import React, { useState } from "react";
+import Image from "next/image";
 import { useEthers } from "@usedapp/core";
-import React from "react";
+import { ContentCopyRounded } from "@mui/icons-material";
+import {
+  Paper,
+  Typography,
+  Chip,
+  Box,
+  Divider,
+  IconButton,
+  Stack,
+  Tooltip,
+} from "@mui/material";
+import ShareIcon from "../ShareIcon";
 
 const Review = () => {
-  const { library } = useEthers();
+  const { account, library } = useEthers();
+  const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
+
   return (
     <Paper
       sx={{
-        p: "24px",
         my: "30px",
         boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
       }}
     >
-      <Box>
-        <Typography variant="body1" gutterBottom>
-          Wallet Connected.
-        </Typography>
+      <Box display="flex">
+        <Box p={3} sx={{ maxWidth: "33%", flexBasis: "33%" }}>
+          <Typography variant="body1" mb={3}>
+            Details
+          </Typography>
+          <Typography variant="caption">Name of new Wallet</Typography>
+          <Typography variant="body2" mb={3} fontWeight="500">
+            www
+          </Typography>
+          <Typography variant="caption">
+            Any transaction requires the confirmation of:
+          </Typography>
+          <Typography variant="body2" fontWeight="500" mb={3}>
+            1 out of 1 owners
+          </Typography>
+        </Box>
+
+        <Divider orientation="vertical" flexItem />
+
+        <Box sx={{ maxWidth: "67%", flexBasis: "67%" }}>
+          <Box p={3}>
+            <Typography variant="body1">1 Safe Owners</Typography>
+          </Box>
+
+          <Divider />
+          <Stack py={1} px={3} spacing={1} direction="row" alignItems="center">
+            <Image
+              src="/asset/images/avatar.png"
+              width="32"
+              height="32"
+              alt=""
+              className="rounded-full object-cover"
+            />
+            <Typography variant="body1" className="text-xs truncate">
+              <Typography variant="caption" fontWeight="bold">
+                {library?.network?.name?.substring(0, 2)}
+                {library?.network?.name?.substring(3, 4)}:
+              </Typography>{" "}
+              {account}
+            </Typography>
+            <Tooltip title={tooltipTitle} placement="top">
+              <IconButton
+                size="medium"
+                onClick={() => {
+                  account && navigator.clipboard.writeText(account);
+                  setTooltipTitle("Copied");
+                  setTimeout(() => {
+                    setTooltipTitle("Copy to clipboard");
+                  }, 1200);
+                }}
+              >
+                <ContentCopyRounded
+                  sx={{ color: "disabled.main", fontSize: "16px" }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="View on goerli.etherscan.io" placement="top">
+              <IconButton
+                size="small"
+                onClick={() => {
+                  window.open(
+                    `https://${library?.network?.name}.etherscan.io/address/${account}`,
+                    "_blank"
+                  );
+                }}
+              >
+                <ShareIcon />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+          <Divider />
+        </Box>
       </Box>
 
-      <Typography variant="body1" component="span" gutterBottom>
-        Creating a Wallet on{" "}
-      </Typography>
-      <Chip
-        label={library?.network?.name}
-        sx={{
-          backgroundColor: "warning.light",
-          fontWeight: "500",
-          color: "white",
-        }}
-      />
+      <Divider />
+      <Box p={3}>
+        <Typography variant="body1" component="div" gutterBottom>
+          You&apos;re about to create a new Safe{" "}
+          <Chip
+            label={library?.network?.name}
+            sx={{
+              backgroundColor: "warning.light",
+              fontWeight: "500",
+              color: "white",
+            }}
+          />{" "}
+          on Goerli and will have to confirm a transaction with your currently
+          connected wallet. The creation will cost approximately &gt; 0.001 GOR.
+          The exact amount will be determined by your wallet.
+        </Typography>
+      </Box>
     </Paper>
   );
 };

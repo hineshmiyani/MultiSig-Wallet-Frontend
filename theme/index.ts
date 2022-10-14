@@ -58,15 +58,6 @@ export const theme = createTheme({
       "2xl": 1536,
     },
   },
-  components: {
-    MuiTypography: {
-      defaultProps: {
-        variantMapping: {
-          body2: "span",
-        },
-      },
-    },
-  },
   typography: {
     fontFamily: [
       "Poppins",

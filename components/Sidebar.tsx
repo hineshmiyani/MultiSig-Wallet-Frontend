@@ -10,10 +10,10 @@ const Sidebar = (props: Props) => {
         height: "max(calc(100vh - 66px), 100%)",
         backgroundColor: "primary.contrastText",
         boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
+        position: "fixed",
+        width: "inherit",
       }}
-    >
-      Sidebar
-    </Box>
+    ></Box>
   );
 };
 

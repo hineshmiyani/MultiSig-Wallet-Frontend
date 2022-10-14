@@ -7,7 +7,7 @@ const Sidebar = (props: Props) => {
   return (
     <Box
       sx={{
-        height: "calc(100vh - 66px)",
+        height: "max(calc(100vh - 66px), 100%)",
         backgroundColor: "primary.contrastText",
         boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
       }}

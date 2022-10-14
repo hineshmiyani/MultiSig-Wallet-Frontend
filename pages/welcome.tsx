@@ -12,10 +12,12 @@ import {
 import React from "react";
 import { APP_NAME } from "../constants";
 import { Add, AccountBalanceWalletOutlined } from "@mui/icons-material";
+import { useRouter } from "next/router";
 
 type Props = {};
 
 const Welcome = (props: Props) => {
+  const router = useRouter();
   return (
     <>
       <Container maxWidth={false}>
@@ -86,7 +88,7 @@ const Welcome = (props: Props) => {
                   },
                 }}
                 startIcon={<Add />}
-                href="create-wallet"
+                onClick={() => router.push("/create")}
               >
                 Create new Wallet
               </Button>

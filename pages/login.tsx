@@ -12,7 +12,7 @@ const Login = () => {
   useEffect(() => {
     if (account) {
       if (redirect_url) {
-        router.push(`/${redirect_url}`);
+        router.push(`${redirect_url}`);
       } else {
         router.push(`/`);
       }

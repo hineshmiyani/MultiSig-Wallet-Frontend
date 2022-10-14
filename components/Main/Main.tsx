@@ -4,7 +4,7 @@ import { Contract } from "@ethersproject/contracts";
 import multiSigWalletAbi from "../../constants/MultiSigWalletAbi.json";
 import contractAddresses from "../../constants/contractAddresses.json";
 import { useCall, useContractFunction, useEthers } from "@usedapp/core";
-import CreateWallet from "./CreateWallet";
+import CreateWallet from "../CreateWallet/CreateWallet";
 import { Container } from "@mui/material";
 
 const Main = () => {
@@ -26,11 +26,7 @@ const Main = () => {
   //   console.log("owners:", value);
   // };
 
-  return (
-    <Container maxWidth="xl">
-      <CreateWallet />
-    </Container>
-  );
+  return <Container maxWidth="xl">Main</Container>;
 };
 
 export default Main;

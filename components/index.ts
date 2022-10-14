@@ -5,3 +5,4 @@ export { default as Loader } from "./Loader";
 export { default as NavButton } from "./NavButton";
 export { default as AccountDialog } from "./AccountDialog";
 export { default as Sidebar } from "./Sidebar";
+export { default as CreateWallet } from "./CreateWallet";

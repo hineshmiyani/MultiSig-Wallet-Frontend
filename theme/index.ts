@@ -83,3 +83,30 @@ export const theme = createTheme({
     },
   },
 });
+
+export const customStepperStyles = {
+  "& .MuiStepLabel-root .Mui-completed": {
+    color: "primary.buttonColor", // circle color (COMPLETED)
+  },
+  "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel": {
+    color: "red.500", // Just text label (COMPLETED)
+  },
+  "& .MuiStepLabel-root .Mui-active": {
+    color: "primary.buttonColor", // circle color (ACTIVE)
+  },
+  "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel": {
+    color: "primary.buttonColor", // Just text label (ACTIVE)
+  },
+  "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
+    fill: "primary.contrastText", // circle's number (ACTIVE)
+  },
+};
+
+export const customStepperConnector = {
+  "&.MuiStepConnector-root.Mui-active .MuiStepConnector-line": {
+    borderColor: "primary.buttonColor",
+  },
+  "&.MuiStepConnector-root.Mui-completed .MuiStepConnector-line": {
+    borderColor: "primary.buttonColor",
+  },
+};

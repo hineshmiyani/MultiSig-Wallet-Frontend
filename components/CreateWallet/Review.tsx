@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useEthers } from "@usedapp/core";
 import { ContentCopyRounded } from "@mui/icons-material";
@@ -17,6 +17,17 @@ import ShareIcon from "../ShareIcon";
 const Review = () => {
   const { account, library } = useEthers();
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
+  const [{ ownersList, requiredConfirmations }, setOwnerData] = useState<any>({
+    ownersList: [],
+    requiredConfirmations: "",
+  });
+
+  useEffect(() => {
+    const { ownersList, requiredConfirmations } =
+      localStorage.getItem("ownersData") &&
+      JSON.parse(localStorage.getItem("ownersData") || "");
+    setOwnerData({ ownersList, requiredConfirmations });
+  }, []);
 
   return (
     <Paper
@@ -35,7 +46,7 @@ const Review = () => {
             Any transaction requires the confirmation of:
           </Typography>
           <Typography variant="body2" fontWeight="500" mb={3}>
-            1 out of 1 owners
+            {requiredConfirmations} out of {ownersList.length} owners
           </Typography>
         </Box>
 
@@ -43,56 +54,69 @@ const Review = () => {
 
         <Box sx={{ maxWidth: "67%", flexBasis: "67%" }}>
           <Box p={3}>
-            <Typography variant="body1">1 Safe Owners</Typography>
+            <Typography variant="body1">
+              {ownersList.length} Wallet Owners
+            </Typography>
           </Box>
 
           <Divider />
-          <Stack py={1} px={3} spacing={1} direction="row" alignItems="center">
-            <Image
-              src="/asset/images/avatar.png"
-              width="32"
-              height="32"
-              alt=""
-              className="rounded-full object-cover"
-            />
-            <Typography variant="body1" className="text-xs truncate">
-              <Typography variant="caption" fontWeight="bold">
-                {library?.network?.name?.substring(0, 2)}
-                {library?.network?.name?.substring(3, 4)}:
-              </Typography>{" "}
-              {account}
-            </Typography>
-            <Tooltip title={tooltipTitle} placement="top">
-              <IconButton
-                size="medium"
-                onClick={() => {
-                  account && navigator.clipboard.writeText(account);
-                  setTooltipTitle("Copied");
-                  setTimeout(() => {
-                    setTooltipTitle("Copy to clipboard");
-                  }, 1200);
-                }}
-              >
-                <ContentCopyRounded
-                  sx={{ color: "disabled.main", fontSize: "16px" }}
-                />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="View on goerli.etherscan.io" placement="top">
-              <IconButton
-                size="small"
-                onClick={() => {
-                  window.open(
-                    `https://${library?.network?.name}.etherscan.io/address/${account}`,
-                    "_blank"
-                  );
-                }}
-              >
-                <ShareIcon />
-              </IconButton>
-            </Tooltip>
-          </Stack>
-          <Divider />
+          {ownersList.length > 0 &&
+            ownersList?.map((address: string, index: number) => (
+              <Box key={address + index}>
+                <Stack
+                  py={1}
+                  px={3}
+                  spacing={1}
+                  direction="row"
+                  alignItems="center"
+                >
+                  <Image
+                    src="/asset/images/avatar.png"
+                    width="32"
+                    height="32"
+                    alt=""
+                    className="rounded-full object-cover"
+                  />
+                  <Typography variant="body1" className="text-xs w-[324px] ">
+                    <Typography variant="caption" fontWeight="bold">
+                      {library?.network?.name?.substring(0, 2)}
+                      {library?.network?.name?.substring(3, 4)}:
+                    </Typography>{" "}
+                    {address}
+                  </Typography>
+                  <Tooltip title={tooltipTitle} placement="top">
+                    <IconButton
+                      size="medium"
+                      onClick={() => {
+                        address && navigator.clipboard.writeText(address);
+                        setTooltipTitle("Copied");
+                        setTimeout(() => {
+                          setTooltipTitle("Copy to clipboard");
+                        }, 1200);
+                      }}
+                    >
+                      <ContentCopyRounded
+                        sx={{ color: "disabled.main", fontSize: "16px" }}
+                      />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="View on goerli.etherscan.io" placement="top">
+                    <IconButton
+                      size="small"
+                      onClick={() => {
+                        window.open(
+                          `https://${library?.network?.name}.etherscan.io/address/${address}`,
+                          "_blank"
+                        );
+                      }}
+                    >
+                      <ShareIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Stack>
+                <Divider />
+              </Box>
+            ))}
         </Box>
       </Box>
 

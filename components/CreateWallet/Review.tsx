@@ -24,8 +24,8 @@ const Review = () => {
 
   useEffect(() => {
     const { ownersList, requiredConfirmations } =
-      localStorage.getItem("ownersData") &&
-      JSON.parse(localStorage.getItem("ownersData") || "");
+      sessionStorage.getItem("ownersData") &&
+      JSON.parse(sessionStorage.getItem("ownersData") || "");
     setOwnerData({ ownersList, requiredConfirmations });
   }, []);
 
@@ -77,7 +77,11 @@ const Review = () => {
                     alt=""
                     className="rounded-full object-cover"
                   />
-                  <Typography variant="body1" className="text-xs w-[324px] ">
+                  <Typography
+                    variant="caption"
+                    component="p"
+                    sx={{ width: "340px" }}
+                  >
                     <Typography variant="caption" fontWeight="bold">
                       {library?.network?.name?.substring(0, 2)}
                       {library?.network?.name?.substring(3, 4)}:

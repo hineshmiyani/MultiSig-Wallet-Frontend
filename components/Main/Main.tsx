@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { utils } from "ethers";
 import { Contract } from "@ethersproject/contracts";
-import multiSigWalletAbi from "../../constants/MultiSigWalletAbi.json";
-import contractAddresses from "../../constants/contractAddresses.json";
 import { useCall, useContractFunction, useEthers } from "@usedapp/core";
-import CreateWallet from "../CreateWallet/CreateWallet";
 import { Container } from "@mui/material";
 import { useRouter } from "next/router";
 

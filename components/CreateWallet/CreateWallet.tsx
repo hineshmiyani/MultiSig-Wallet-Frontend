@@ -14,6 +14,8 @@ import NameOfWallet from "./NameOfWallet";
 import AddOwners from "./AddOwners";
 import Review from "./Review";
 import { customStepperConnector, customStepperStyles } from "../../theme";
+import { useCall, useContractFunction } from "@usedapp/core";
+import { contract } from "../../constants";
 
 const steps = [
   "Connect Wallet",
@@ -66,6 +68,21 @@ const CreateWallet = () => {
   //   completedSteps,
   //   completed,
   // })}
+
+  const { state, send } = useContractFunction(contract, "createMultiSig", {});
+  // const data = useCall({
+  //   contract: contract,
+  //   method: "getOwners",
+  //   args: ["0x630A676DEca0952791Ea3A6BB9751d2f06540ee1", 0],
+  // });
+  const createWallet = async () => {
+    // const { ownersList, requiredConfirmations } =
+    //   sessionStorage.getItem("ownersData") &&
+    //   JSON.parse(sessionStorage.getItem("ownersData") || "");
+    // console.log({ ownersList, requiredConfirmations });
+    // send(ownersList, requiredConfirmations);
+    // console.log({ data });
+  };
 
   return (
     <Box sx={{ width: "80%", m: "20px auto" }}>
@@ -125,7 +142,6 @@ const CreateWallet = () => {
                 Back
               </Button>
               <Button
-                onClick={handleNext}
                 variant="contained"
                 color="primary"
                 sx={{
@@ -136,6 +152,9 @@ const CreateWallet = () => {
                   "&:hover": {
                     backgroundColor: "primary.buttonColor",
                   },
+                }}
+                onClick={() => {
+                  activeStep === totalSteps - 1 ? createWallet() : handleNext();
                 }}
               >
                 {/* {completedSteps === totalSteps - 1 ? "Create" : "Continue"} */}

@@ -20,31 +20,33 @@ import { useEthers } from "@usedapp/core";
 import { Add, DeleteOutline } from "@mui/icons-material";
 
 const AddOwners = () => {
-  const { library } = useEthers();
+  const { library, account } = useEthers();
   const [ownerCount, setOwnerCount] = useState<number>(() => {
-    if (localStorage.getItem("ownersData")) {
+    if (sessionStorage.getItem("ownersData")) {
       const { ownersList } = JSON.parse(
-        localStorage.getItem("ownersData") || ""
+        sessionStorage.getItem("ownersData") || ""
       );
       return ownersList.length;
     }
     return 1;
   });
   const [ownersList, setOwnersList] = useState<any[]>(() => {
-    if (localStorage.getItem("ownersData")) {
+    if (sessionStorage.getItem("ownersData")) {
       const { ownersList } = JSON.parse(
-        localStorage.getItem("ownersData") || ""
+        sessionStorage.getItem("ownersData") || ""
       );
-      return ownersList;
+      return ownersList.length > 0 && ownersList[0] !== ""
+        ? ownersList
+        : [account];
     }
-    return [];
+    return [account];
   });
 
   const [requiredConfirmations, setRequiredConfirmations] = useState<string>(
     () => {
-      if (localStorage.getItem("ownersData")) {
+      if (sessionStorage.getItem("ownersData")) {
         const { requiredConfirmations } = JSON.parse(
-          localStorage.getItem("ownersData") || ""
+          sessionStorage.getItem("ownersData") || ""
         );
         return requiredConfirmations;
       }
@@ -60,7 +62,7 @@ const AddOwners = () => {
     console.log({ ownersList, requiredConfirmations, ownerCount });
 
     return () => {
-      localStorage.setItem(
+      sessionStorage.setItem(
         "ownersData",
         JSON.stringify({
           ownersList,

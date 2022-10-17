@@ -60,12 +60,12 @@ const AddOwners = () => {
 
   useEffect(() => {
     console.log({ ownersList, requiredConfirmations, ownerCount });
-
+    const newOwnersList = ownersList.filter((val) => val !== "");
     return () => {
       sessionStorage.setItem(
         "ownersData",
         JSON.stringify({
-          ownersList,
+          ownersList: newOwnersList,
           requiredConfirmations,
         })
       );
@@ -203,8 +203,8 @@ const AddOwners = () => {
           color="error"
           sx={{ width: "62px" }}
         >
-          {Array(ownerCount)
-            .fill("")
+          {ownersList
+            .filter((val) => val !== "")
             .map((val, index) => (
               <MenuItem key={index} value={index + 1}>
                 {index + 1}
@@ -212,7 +212,7 @@ const AddOwners = () => {
             ))}
         </Select>
         <Typography variant="body2" component="span" ml={1}>
-          out of {ownerCount} owner(s)
+          out of {ownersList.filter((val) => val !== "").length} owner(s)
         </Typography>
       </Box>
 

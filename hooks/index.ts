@@ -1,0 +1,1 @@
+export { useGetOwners } from "./useGetOwners";

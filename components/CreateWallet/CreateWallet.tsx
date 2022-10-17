@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import {
   Box,
   Stepper,
@@ -7,15 +8,15 @@ import {
   StepLabel,
   Button,
   StepConnector,
-  stepConnectorClasses,
 } from "@mui/material";
+import { useContractFunction } from "@usedapp/core";
 import ConnectWallet from "./ConnectWallet";
 import NameOfWallet from "./NameOfWallet";
 import AddOwners from "./AddOwners";
 import Review from "./Review";
 import { customStepperConnector, customStepperStyles } from "../../theme";
-import { useCall, useContractFunction } from "@usedapp/core";
 import { contract } from "../../constants";
+import toast from "react-hot-toast";
 
 const steps = [
   "Connect Wallet",
@@ -36,8 +37,10 @@ const getStepDescription = (step: number) => {
 };
 
 const CreateWallet = () => {
+  const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState<any>({});
+  const [disabledBtn, setDisabledBtn] = useState(false);
 
   const totalSteps = steps.length;
   const completedSteps = Object.values(completed).filter((step) => step).length;
@@ -62,27 +65,49 @@ const CreateWallet = () => {
     setCompleted({});
   };
 
-  // {console.log({
-  //   allStepsCompleted,
-  //   totalSteps,
-  //   completedSteps,
-  //   completed,
-  // })}
-
   const { state, send } = useContractFunction(contract, "createMultiSig", {});
-  // const data = useCall({
-  //   contract: contract,
-  //   method: "getOwners",
-  //   args: ["0x630A676DEca0952791Ea3A6BB9751d2f06540ee1", 0],
-  // });
+
   const createWallet = async () => {
-    // const { ownersList, requiredConfirmations } =
-    //   sessionStorage.getItem("ownersData") &&
-    //   JSON.parse(sessionStorage.getItem("ownersData") || "");
+    setDisabledBtn(true);
+    const { ownersList, requiredConfirmations } =
+      sessionStorage.getItem("ownersData") &&
+      JSON.parse(sessionStorage.getItem("ownersData") || "");
     // console.log({ ownersList, requiredConfirmations });
-    // send(ownersList, requiredConfirmations);
-    // console.log({ data });
+    send(ownersList, requiredConfirmations);
   };
+
+  useEffect(() => {
+    console.log({ state });
+    let loadingToast, confirmTxWallet;
+    switch (state.status) {
+      case "PendingSignature":
+        confirmTxWallet = toast.loading("Please Confirm Transaction...");
+        break;
+      case "Mining":
+        toast.dismiss(confirmTxWallet);
+        loadingToast = toast.loading("Creating Wallet...");
+        break;
+      case "Success":
+        toast.dismiss(loadingToast);
+        toast.success("Wallet successfully created!", { duration: 5000 });
+        setDisabledBtn(false);
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 5000);
+        break;
+      case "Exception":
+        toast.dismiss(loadingToast);
+        toast.error(state?.errorMessage || "");
+        setDisabledBtn(false);
+        break;
+      case "Fail":
+        toast.error(state?.errorMessage || "");
+        setDisabledBtn(false);
+        break;
+      default:
+        break;
+    }
+  }, [state]);
 
   return (
     <Box sx={{ width: "80%", m: "20px auto" }}>
@@ -102,7 +127,7 @@ const CreateWallet = () => {
         ))}
       </Stepper>
 
-      <div>
+      <Box>
         {allStepsCompleted ? (
           <>
             <Typography sx={{ mt: 2, mb: 1 }}>All Steps Completed</Typography>
@@ -153,6 +178,7 @@ const CreateWallet = () => {
                     backgroundColor: "primary.buttonColor",
                   },
                 }}
+                disabled={disabledBtn}
                 onClick={() => {
                   activeStep === totalSteps - 1 ? createWallet() : handleNext();
                 }}
@@ -163,7 +189,7 @@ const CreateWallet = () => {
             </Box>
           </Box>
         )}
-      </div>
+      </Box>
     </Box>
   );
 };

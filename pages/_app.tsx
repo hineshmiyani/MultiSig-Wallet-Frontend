@@ -23,7 +23,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Layout>
             <>
               <Component {...pageProps} />
-              <Toaster />
+              <Toaster
+                toastOptions={{
+                  style: {
+                    maxWidth: "500px",
+                    width: "auto",
+                  },
+                }}
+              />
             </>
           </Layout>
         </DAppProvider>

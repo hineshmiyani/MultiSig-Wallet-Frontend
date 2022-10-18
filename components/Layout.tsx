@@ -3,7 +3,7 @@ import Head from "next/head";
 import Header from "./Header";
 import { Container } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/Sidebar";
 import { useRouter } from "next/router";
 import { useEthers } from "@usedapp/core";
 interface Props {

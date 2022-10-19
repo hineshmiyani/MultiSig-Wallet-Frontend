@@ -13,7 +13,7 @@ export function useGetOwners(args: any[]) {
     console.log("Error: ", error.message);
     return undefined;
   }
-  return { value, error };
+  return value;
 }
 
 export function useGetWallets(args: any[]) {

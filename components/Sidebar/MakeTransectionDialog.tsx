@@ -93,9 +93,12 @@ const MakeTransectionDialog: React.FC<Props> = ({ children }) => {
         break;
       case "Success":
         toast.dismiss(loadingToast);
-        successToast = toast.success("Ether successfully Deposited!", {
-          duration: 5000,
-        });
+        successToast = toast.success(
+          "Ether has been successfully deposited! ",
+          {
+            duration: 5000,
+          }
+        );
         setDisabledBtn(false);
         setTimeout(() => {
           toast.dismiss(successToast);
@@ -124,11 +127,13 @@ const MakeTransectionDialog: React.FC<Props> = ({ children }) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
     setTimeout(() => {
       setShowDepositForm(false);
-    }, 1000);
+      setDepositAmount(0);
+    }, 500);
   };
 
   return (

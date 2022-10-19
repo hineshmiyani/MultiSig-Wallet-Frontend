@@ -91,9 +91,7 @@ const CreateWallet = () => {
         toast.dismiss(loadingToast);
         toast.success("Wallet successfully created!", { duration: 5000 });
         setDisabledBtn(false);
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 5000);
+        setTimeout(() => {}, 5000);
         break;
       case "Exception":
         toast.dismiss(loadingToast);

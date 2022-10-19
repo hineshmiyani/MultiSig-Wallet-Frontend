@@ -7,6 +7,6 @@ export { default as AccountDialog } from "./AccountDialog";
 export { default as Sidebar } from "./Sidebar/Sidebar";
 export { default as CreateWallet } from "./CreateWallet";
 export { default as ShareIcon } from "./ShareIcon";
-export { default as MakeTransectionDialog } from "./Sidebar/MakeTransectionDialog";
+export { default as MakeTransactionDialog } from "./Sidebar/MakeTransactionDialog";
 export { default as WalletOwners } from "./Dashboard/WalletOwners";
 export { default as WalletDetails } from "./Dashboard/WalletDetails";

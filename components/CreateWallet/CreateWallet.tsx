@@ -9,7 +9,7 @@ import {
   Button,
   StepConnector,
 } from "@mui/material";
-import { useContractFunction } from "@usedapp/core";
+import { useContractFunction, useEthers } from "@usedapp/core";
 import ConnectWallet from "./ConnectWallet";
 import NameOfWallet from "./NameOfWallet";
 import AddOwners from "./AddOwners";
@@ -17,6 +17,7 @@ import Review from "./Review";
 import { customStepperConnector, customStepperStyles } from "../../theme";
 import { contract } from "../../constants";
 import toast from "react-hot-toast";
+import { useGetWallets, useGetWalletsCount } from "../../hooks";
 
 const steps = [
   "Connect Wallet",
@@ -46,26 +47,13 @@ const CreateWallet = () => {
   const completedSteps = Object.values(completed).filter((step) => step).length;
   const allStepsCompleted = completedSteps === totalSteps;
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    setCompleted((prevCompleted: any) => {
-      return { ...prevCompleted, [activeStep]: false };
-    });
-  };
-
-  const handleNext = () => {
-    setCompleted((prevCompleted: any) => {
-      return { ...prevCompleted, [activeStep]: true };
-    });
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
-  };
-
+  const { account } = useEthers();
   const { state, send } = useContractFunction(contract, "createMultiSig", {});
+  const totalWallet = useGetWalletsCount([account?.toString()]);
+  const walletList = useGetWallets(
+    [account?.toString()],
+    parseInt(totalWallet)
+  );
 
   const createWallet = async () => {
     setDisabledBtn(true);
@@ -91,7 +79,9 @@ const CreateWallet = () => {
         toast.dismiss(loadingToast);
         toast.success("Wallet successfully created!", { duration: 5000 });
         setDisabledBtn(false);
-        setTimeout(() => {}, 5000);
+        setTimeout(() => {
+          router.push(`/dashboard/${walletList.at(-1)}`);
+        }, 5000);
         break;
       case "Exception":
         toast.dismiss(loadingToast);
@@ -106,6 +96,25 @@ const CreateWallet = () => {
         break;
     }
   }, [state]);
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setCompleted((prevCompleted: any) => {
+      return { ...prevCompleted, [activeStep]: false };
+    });
+  };
+
+  const handleNext = () => {
+    setCompleted((prevCompleted: any) => {
+      return { ...prevCompleted, [activeStep]: true };
+    });
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+    setCompleted({});
+  };
 
   return (
     <Box sx={{ width: "80%", m: "20px auto" }}>

@@ -15,7 +15,7 @@ import { useGetOwners, useGetWallets } from "../../hooks";
 import ShareIcon from "../ShareIcon";
 import Image from "next/image";
 import { formatEther } from "@ethersproject/units";
-import MakeTransectionDialog from "./MakeTransectionDialog";
+import MakeTransactionDialog from "./MakeTransactionDialog";
 
 type Props = {};
 
@@ -148,7 +148,7 @@ const Sidebar = (props: Props) => {
                 </Typography>
               </Stack>
 
-              <MakeTransectionDialog>
+              <MakeTransactionDialog walletAddress={wallet}>
                 <Button
                   sx={{
                     backgroundColor: "primary.buttonColor",
@@ -165,7 +165,7 @@ const Sidebar = (props: Props) => {
                 >
                   New Transaction
                 </Button>
-              </MakeTransectionDialog>
+              </MakeTransactionDialog>
               <Button
                 onClick={() =>
                   router.push(

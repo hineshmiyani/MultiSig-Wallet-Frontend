@@ -12,7 +12,7 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import MakeTransectionDialog from "../Sidebar/MakeTransectionDialog";
+import MakeTransectionDialog from "../Sidebar/MakeTransactionDialog";
 
 type Props = { walletAddress: string };
 
@@ -92,7 +92,7 @@ const WalletDetails: React.FC<Props> = ({ walletAddress }) => {
               </Box>
 
               <Box ml="auto">
-                <MakeTransectionDialog>
+                <MakeTransectionDialog walletAddress={walletAddress}>
                   <Button
                     sx={{
                       backgroundColor: "primary.buttonColor",
@@ -113,22 +113,6 @@ const WalletDetails: React.FC<Props> = ({ walletAddress }) => {
               </Box>
             </Stack>
           </CardContent>
-          {/* <CardActions sx={{ p: "30px 24px" }}>
-      <Button
-        sx={{
-          backgroundColor: "primary.buttonColor",
-          border: "1px solid",
-          borderColor: "primary.buttonColor",
-          color: "primary.contrastText",
-          p: "8px 12px",
-          "&:hover": {
-            backgroundColor: "primary.buttonColor",
-          },
-        }}
-      >
-        View Assets
-      </Button>
-    </CardActions> */}
         </Card>
       </Paper>
     </>

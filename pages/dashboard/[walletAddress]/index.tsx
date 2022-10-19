@@ -3,23 +3,8 @@ import Image from "next/image";
 import { GetStaticPaths, GetStaticProps, GetServerSideProps } from "next";
 import { useEtherBalance, useEthers } from "@usedapp/core";
 import { formatEther } from "@ethersproject/units";
-import {
-  Container,
-  Typography,
-  Paper,
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  Chip,
-  Stack,
-  Box,
-} from "@mui/material";
-import {
-  MakeTransectionDialog,
-  WalletDetails,
-  WalletOwners,
-} from "../../components";
+import { Button, Container, Typography } from "@mui/material";
+import { WalletDetails, WalletOwners } from "../../../components";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -41,6 +26,37 @@ const Dashboard: React.FC<Props> = ({ params }) => {
       <Container>
         {walletAddress && <WalletDetails walletAddress={walletAddress} />}
         <WalletOwners />
+
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "700",
+            mt: "24px",
+          }}
+          gutterBottom
+        >
+          Transactions
+        </Typography>
+
+        <Button
+          onClick={() =>
+            router.push(`/dashboard/${walletAddress}/transactions`)
+          }
+          sx={{
+            backgroundColor: "primary.buttonColor",
+            border: "1px solid",
+            borderColor: "primary.buttonColor",
+            color: "primary.contrastText",
+            p: "8px 12px",
+            transition: " all .2s ease-in-out",
+            "&:hover": {
+              backgroundColor: "primary.buttonColor",
+              transform: "scale(1.05)",
+            },
+          }}
+        >
+          Transactions
+        </Button>
       </Container>
     </>
   );

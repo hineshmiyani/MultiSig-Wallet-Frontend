@@ -55,6 +55,8 @@ const CreateWallet = () => {
     parseInt(totalWallet)
   );
 
+  console.log({ walletList, totalWallet: parseInt(totalWallet) });
+
   const createWallet = async () => {
     setDisabledBtn(true);
     const { ownersList, requiredConfirmations } =
@@ -77,11 +79,8 @@ const CreateWallet = () => {
         break;
       case "Success":
         toast.dismiss(loadingToast);
-        toast.success("Wallet successfully created!", { duration: 5000 });
+        toast.success("Wallet successfully created!", { duration: 10000 });
         setDisabledBtn(false);
-        setTimeout(() => {
-          router.push(`/dashboard/${walletList.at(-1)}`);
-        }, 5000);
         break;
       case "Exception":
         toast.dismiss(loadingToast);
@@ -96,6 +95,20 @@ const CreateWallet = () => {
         break;
     }
   }, [state]);
+
+  useEffect(() => {
+    if (state?.status === "Success") {
+      setTimeout(() => {
+        if (walletList) {
+          router.push({
+            pathname: `/dashboard/${walletList.at(-1)}`,
+            query: { id: walletList.length - 1 },
+          });
+          sessionStorage.removeItem("ownersData");
+        }
+      }, 10000);
+    }
+  }, [walletList, parseInt(totalWallet)]);
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);

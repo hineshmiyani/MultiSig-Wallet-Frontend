@@ -9,15 +9,26 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { APP_NAME } from "../constants";
 import { Add, AccountBalanceWalletOutlined } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import { useEthers } from "@usedapp/core";
+import { useGetWallets, useGetWalletsCount } from "../hooks";
 
 type Props = {};
 
 const Welcome = (props: Props) => {
   const router = useRouter();
+  const { status } = router?.query;
+
+  const { account } = useEthers();
+  const totalWallet = useGetWalletsCount([account?.toString()]);
+  const walletList = useGetWallets(
+    [account?.toString()],
+    parseInt(totalWallet)
+  );
+
   return (
     <>
       <Container maxWidth="lg">

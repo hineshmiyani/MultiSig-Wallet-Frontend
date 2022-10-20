@@ -88,7 +88,7 @@ export function useGetWallets(args: any[], totalWallet: number) {
       return undefined;
     }
   });
-  console.log({ results });
+  // console.log({ results });
   return results?.map((result: any) => result?.value?.[0]);
 }
 

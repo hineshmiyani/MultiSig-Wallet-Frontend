@@ -17,9 +17,6 @@ const Dashboard: React.FC<Props> = ({ params }) => {
   const { library } = useEthers();
   const router = useRouter();
   const walletAddress: any = router?.query?.walletAddress;
-  useEffect(() => {
-    console.log({ walletAddress });
-  }, []);
 
   return (
     <>

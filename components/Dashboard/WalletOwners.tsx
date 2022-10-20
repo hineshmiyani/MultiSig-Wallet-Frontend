@@ -13,6 +13,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { useGetOwners } from "../../hooks";
 import { ContentCopyRounded } from "@mui/icons-material";
 import ShareIcon from "../ShareIcon";
+import { useRouter } from "next/router";
 
 const AddressCell = (params: GridRenderCellParams) => {
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
@@ -64,10 +65,12 @@ const AddressCell = (params: GridRenderCellParams) => {
 
 type Props = {};
 const WalletOwners: React.FC<Props> = () => {
-  const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
+  const router = useRouter();
+  const { id: walletId } = router?.query;
   const [rows, setRows] = useState<any[]>([{ id: 1, avatar: "", address: "" }]);
+
   const { account, library } = useEthers();
-  const ownersList = useGetOwners([account?.toString(), 0]);
+  const ownersList = useGetOwners([account?.toString(), walletId]);
 
   const columns: GridColDef[] = [
     {
@@ -105,7 +108,7 @@ const WalletOwners: React.FC<Props> = () => {
   ];
 
   useEffect(() => {
-    console.log(ownersList);
+    // console.log(ownersList);
     setRows(() => {
       const modifyOwnerList =
         ownersList?.length > 0 &&

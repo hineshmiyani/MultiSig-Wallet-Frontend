@@ -11,11 +11,12 @@ import {
   Typography,
 } from "@mui/material";
 import { AddCircleOutlined, ContentCopyRounded } from "@mui/icons-material";
-import { useGetOwners, useGetWallets } from "../../hooks";
+import { useGetOwners, useGetWallets, useGetWalletsCount } from "../../hooks";
 import ShareIcon from "../ShareIcon";
 import Image from "next/image";
 import { formatEther } from "@ethersproject/units";
 import MakeTransactionDialog from "./MakeTransactionDialog";
+import SideDrawer from "./SideDrawer";
 
 type Props = {};
 
@@ -23,12 +24,18 @@ const Sidebar = (props: Props) => {
   const router = useRouter();
   const { account, library } = useEthers();
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
-  const wallets = useGetWallets([account?.toString(), 0]);
-  const etherBalance = useEtherBalance(wallets?.[0]);
+
+  const totalWallet = useGetWalletsCount([account?.toString()]);
+  const walletList = useGetWallets(
+    [account?.toString()],
+    parseInt(totalWallet)
+  );
+
+  const etherBalance = useEtherBalance(walletList?.[0]);
 
   useEffect(() => {
     console.log({
-      wallets,
+      walletList,
     });
   }, []);
 
@@ -61,11 +68,15 @@ const Sidebar = (props: Props) => {
         <IconButton
           sx={{
             color: "primary.buttonColor",
+            transition: " all .2s ease-in-out",
+            "&:hover": {
+              transform: "scale(1.1)",
+            },
           }}
           size="small"
           onClick={() => router.push("/welcome")}
         >
-          <AddCircleOutlined sx={{ fontSize: "48px" }} />
+          <AddCircleOutlined sx={{ fontSize: "36px" }} />
         </IconButton>
         <Typography
           variant="h6"
@@ -77,9 +88,8 @@ const Sidebar = (props: Props) => {
 
       <Divider light />
 
-      {/* {router.route.includes("dashboard") && */}
-      {true &&
-        wallets?.map((wallet: "string") => (
+      {router.route.includes("dashboard") &&
+        walletList?.slice(1, 2)?.map((wallet: "string") => (
           <Box key={wallet}>
             <Stack p={2} spacing={1.75} alignItems="center">
               <Image
@@ -166,18 +176,12 @@ const Sidebar = (props: Props) => {
                   New Transaction
                 </Button>
               </MakeTransactionDialog>
-              <Button
-                onClick={() =>
-                  router.push(
-                    "/dashboard/0xE3CCa69d138F26E272159d64efD8a62aFe3cC1A5"
-                  )
-                }
-              >
-                Dashboard
-              </Button>
             </Stack>
           </Box>
         ))}
+
+      <Divider light />
+      <SideDrawer walletList={walletList} />
     </Box>
   );
 };

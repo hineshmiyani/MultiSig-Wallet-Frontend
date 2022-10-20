@@ -22,6 +22,7 @@ type Props = {};
 
 const Sidebar = (props: Props) => {
   const router = useRouter();
+  const { id: walletId } = router?.query;
   const { account, library } = useEthers();
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
 
@@ -89,7 +90,8 @@ const Sidebar = (props: Props) => {
       <Divider light />
 
       {router.route.includes("dashboard") &&
-        walletList?.slice(1, 2)?.map((wallet: "string") => (
+        walletId &&
+        [walletList?.[+walletId]]?.map((wallet: "string") => (
           <Box key={wallet}>
             <Stack p={2} spacing={1.75} alignItems="center">
               <Image

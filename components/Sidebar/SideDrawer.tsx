@@ -83,6 +83,34 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
         </Stack>
       </List>
       <Divider />
+      <List sx={{ p: 0 }}>
+        <ListItem disablePadding>
+          <ListItemButton
+            sx={{
+              backgroundColor: "grey.200",
+              py: 0.2,
+              px: 4,
+            }}
+          >
+            <ListItemText
+              primary={
+                <Stack direction="row" justifyContent="space-between">
+                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                    Total Wallet :
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    component="span"
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {walletList.length}
+                  </Typography>{" "}
+                </Stack>
+              }
+            />
+          </ListItemButton>
+        </ListItem>
+      </List>
       <List>
         {walletList.map((wallet, index) => (
           <ListItem key={wallet} disablePadding>
@@ -126,6 +154,28 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
             </ListItemButton>
           </ListItem>
         ))}
+
+        {walletList.length === 0 && (
+          <ListItem disablePadding>
+            <ListItemText
+              sx={{
+                py: "10px",
+                px: 4,
+                textAlign: "center",
+              }}
+              primary={
+                <>
+                  <Typography variant="body1" gutterBottom>
+                    Wallet not found!
+                  </Typography>
+                  <Typography variant="body1" component="span">
+                    Please create new wallet.
+                  </Typography>
+                </>
+              }
+            />
+          </ListItem>
+        )}
       </List>
     </Box>
   );

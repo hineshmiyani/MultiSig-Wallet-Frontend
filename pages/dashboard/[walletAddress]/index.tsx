@@ -16,7 +16,11 @@ type Props = {
 const Dashboard: React.FC<Props> = ({ params }) => {
   const { library } = useEthers();
   const router = useRouter();
-  const walletAddress: any = router?.query?.walletAddress;
+  const { walletAddress }: any = router?.query;
+  const { id: walletId } = router?.query;
+  useEffect(() => {
+    console.log({ walletAddress });
+  }, []);
 
   return (
     <>
@@ -37,7 +41,10 @@ const Dashboard: React.FC<Props> = ({ params }) => {
 
         <Button
           onClick={() =>
-            router.push(`/dashboard/${walletAddress}/transactions`)
+            router.push({
+              pathname: `/dashboard/${walletAddress}/transactions`,
+              query: { id: walletId },
+            })
           }
           sx={{
             backgroundColor: "primary.buttonColor",

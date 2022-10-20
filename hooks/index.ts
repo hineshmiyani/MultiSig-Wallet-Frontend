@@ -64,7 +64,6 @@ export function useGetWalletsCount(args: any[]) {
 }
 
 export function useGetWallets(args: any[], totalWallet: number) {
-  // console.log("contract", contract);
   const calls: any = totalWallet
     ? Array(totalWallet)
         ?.fill("")
@@ -81,9 +80,7 @@ export function useGetWallets(args: any[], totalWallet: number) {
   results.forEach((result: any, idx: number) => {
     if (result?.error) {
       console.error(
-        `Error encountered calling 'returnWallet' on ${
-          calls[idx + 1]?.contract.address
-        }: ${result.error.message}`
+        `Error encountered calling 'returnWallet' on ${calls[idx]?.contract.address}: ${result.error.message}`
       );
       return undefined;
     }
@@ -107,19 +104,29 @@ export function useGetTransactionCount(args: any[]) {
   return value;
 }
 
-export function useGetTransactionDetails(args: any[]) {
-  const { value, error } =
-    useCall({
-      contract: contract,
-      method: "getTransaction",
-      args: args,
-    }) ?? {};
+export function useGetTransactions(args: any[], totalTransaction: number) {
+  const calls: any = totalTransaction
+    ? Array(totalTransaction)
+        ?.fill("")
+        ?.map((ele, index: number) => {
+          return {
+            contract: contract,
+            method: "getTransaction",
+            args: [...args, index],
+          };
+        })
+    : [];
+  const results: any = useCalls(calls && calls) ?? {};
 
-  if (error) {
-    console.log("Error: ", error.message);
-    return undefined;
-  }
-  return value;
+  results.forEach((result: any, idx: number) => {
+    if (result?.error) {
+      console.error(
+        `Error encountered calling 'getTransaction' on ${calls[idx]?.contract.address}: ${result.error.message}`
+      );
+      return undefined;
+    }
+  });
+  return results?.map((result: any) => result?.value);
 }
 
 export function useNumConfirmationsRequired(args: any[]) {

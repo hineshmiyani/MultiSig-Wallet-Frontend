@@ -80,6 +80,8 @@ const MakeTransactionDialog: React.FC<Props> = ({
   walletAddress,
 }) => {
   const router = useRouter();
+  const { id: walletId } = router?.query;
+
   const [open, setOpen] = useState<boolean>(false);
   const [disabledBtn, setDisabledBtn] = useState<boolean>(false);
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
@@ -145,7 +147,10 @@ const MakeTransactionDialog: React.FC<Props> = ({
         setDisabledBtn(false);
         setTimeout(() => {
           toast.dismiss(successToast);
-          router.push(`/dashboard/${walletAddress}/transactions`);
+          router.push({
+            pathname: `/dashboard/${walletAddress}/transactions`,
+            query: { id: walletId },
+          });
         }, 6000);
         handleClose();
         break;

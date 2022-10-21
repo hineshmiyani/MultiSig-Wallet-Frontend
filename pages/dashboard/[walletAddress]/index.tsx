@@ -18,49 +18,12 @@ const Dashboard: React.FC<Props> = ({ params }) => {
   const router = useRouter();
   const { walletAddress }: any = router?.query;
   const { id: walletId } = router?.query;
-  useEffect(() => {
-    console.log({ walletAddress });
-  }, []);
 
   return (
     <>
       <Container>
         {walletAddress && <WalletDetails walletAddress={walletAddress} />}
         <WalletOwners />
-
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: "700",
-            mt: "24px",
-          }}
-          gutterBottom
-        >
-          Transactions
-        </Typography>
-
-        <Button
-          onClick={() =>
-            router.push({
-              pathname: `/dashboard/${walletAddress}/transactions`,
-              query: { id: walletId },
-            })
-          }
-          sx={{
-            backgroundColor: "primary.buttonColor",
-            border: "1px solid",
-            borderColor: "primary.buttonColor",
-            color: "primary.contrastText",
-            p: "8px 12px",
-            transition: " all .2s ease-in-out",
-            "&:hover": {
-              backgroundColor: "primary.buttonColor",
-              transform: "scale(1.05)",
-            },
-          }}
-        >
-          Transactions
-        </Button>
       </Container>
     </>
   );

@@ -10,3 +10,5 @@ export { default as ShareIcon } from "./ShareIcon";
 export { default as MakeTransactionDialog } from "./Sidebar/MakeTransactionDialog";
 export { default as WalletOwners } from "./Dashboard/WalletOwners";
 export { default as WalletDetails } from "./Dashboard/WalletDetails";
+export { default as AccountAvatar } from "./AccountAvatar";
+export { default as TransactionProgressStepper } from "./Transaction/TransactionProgressStepper";

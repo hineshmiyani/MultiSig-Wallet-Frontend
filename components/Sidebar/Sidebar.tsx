@@ -34,11 +34,11 @@ const Sidebar = (props: Props) => {
 
   const etherBalance = useEtherBalance(walletList?.[0]);
 
-  useEffect(() => {
-    console.log({
-      walletList,
-    });
-  }, []);
+  // useEffect(() => {
+  //   console.log({
+  //     walletList,
+  //   });
+  // }, []);
 
   return (
     <Box
@@ -178,6 +178,56 @@ const Sidebar = (props: Props) => {
                   New Transaction
                 </Button>
               </MakeTransactionDialog>
+
+              {/* Dashboard */}
+              <Button
+                sx={{
+                  backgroundColor: "primary.buttonColor",
+                  border: "1px solid",
+                  borderColor: "primary.buttonColor",
+                  color: "primary.contrastText",
+                  p: "8px 12px",
+                  width: "145px",
+                  transition: " all .2s ease-in-out",
+                  "&:hover": {
+                    backgroundColor: "primary.buttonColor",
+                    transform: "scale(1.05)",
+                  },
+                }}
+                onClick={() =>
+                  router.push({
+                    pathname: `/dashboard/${wallet}`,
+                    query: { id: walletId },
+                  })
+                }
+              >
+                Dashboard
+              </Button>
+
+              {/* Transactions */}
+              <Button
+                sx={{
+                  backgroundColor: "primary.buttonColor",
+                  border: "1px solid",
+                  borderColor: "primary.buttonColor",
+                  color: "primary.contrastText",
+                  p: "8px 12px",
+                  width: "145px",
+                  transition: " all .2s ease-in-out",
+                  "&:hover": {
+                    backgroundColor: "primary.buttonColor",
+                    transform: "scale(1.05)",
+                  },
+                }}
+                onClick={() =>
+                  router.push({
+                    pathname: `/dashboard/${wallet}/transactions`,
+                    query: { id: walletId },
+                  })
+                }
+              >
+                Transactions
+              </Button>
             </Stack>
           </Box>
         ))}

@@ -12,6 +12,7 @@ import {
   CardContent,
   Chip,
   Container,
+  Divider,
   Paper,
   Stack,
   Tab,
@@ -25,6 +26,10 @@ import {
   useNumConfirmationsRequired,
 } from "../../../../hooks";
 import Image from "next/image";
+import {
+  AccountAvatar,
+  TransactionProgressStepper,
+} from "../../../../components";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -80,9 +85,8 @@ const Transactions = (props: Props) => {
   );
 
   useEffect(() => {
-    console.log({ totalTransaction: parseInt(totalTransaction) });
-    console.log({ transactionsList });
-    console.table(transactionsList?.[0]);
+    // console.log({ totalTransaction: parseInt(totalTransaction) });
+    // console.log({ transactionsList });
   }, [totalTransaction, transactionsList]);
 
   return (
@@ -149,7 +153,17 @@ const Transactions = (props: Props) => {
                           "&::before": { height: 0 },
                         }}
                       >
-                        <AccordionSummary expandIcon={<ExpandMore />}>
+                        <AccordionSummary
+                          expandIcon={<ExpandMore />}
+                          sx={{
+                            "&.MuiAccordionSummary-root.Mui-expanded": {
+                              minHeight: "50px",
+                            },
+                            "& > .MuiAccordionSummary-content.Mui-expanded": {
+                              m: "12px 0",
+                            },
+                          }}
+                        >
                           <Stack
                             direction="row"
                             spacing={2}
@@ -158,6 +172,9 @@ const Transactions = (props: Props) => {
                           >
                             <Box flexBasis="10%" maxWidth="10%">
                               <Typography>
+                                <Typography component="span" fontWeight="600">
+                                  Tx:{" "}
+                                </Typography>
                                 {transactionsList.length - index}
                               </Typography>
                             </Box>
@@ -212,22 +229,44 @@ const Transactions = (props: Props) => {
                                 color: "primary.buttonColor",
                                 flexBasis: "20%",
                                 maxWidth: "20%",
+                                fontWeight: "600",
                               }}
                             >
                               Needs Confirmation
                             </Typography>
                           </Stack>
                         </AccordionSummary>
-                        <AccordionDetails>
-                          <Typography>send to : {transaction?.to}</Typography>
-                          <Typography>
-                            value : {formatEther(parseInt(transaction?.value))}{" "}
-                            ETH
-                          </Typography>
-                          <Typography>
-                            numConfirmations :{" "}
-                            {parseInt(transaction?.numConfirmations)}
-                          </Typography>
+                        <Divider />
+                        <AccordionDetails sx={{ pt: 2 }}>
+                          <Box display="flex" alignItems="top" gap={3}>
+                            <Box>
+                              <Typography variant="body1">
+                                Send{" "}
+                                <Typography
+                                  variant="body1"
+                                  component="span"
+                                  sx={{ fontWeight: "700" }}
+                                >
+                                  {formatEther(parseInt(transaction?.value))}{" "}
+                                </Typography>
+                                ETH to:
+                              </Typography>
+                              <Box my={1}>
+                                <AccountAvatar toAddress={transaction?.to} />
+                              </Box>
+                            </Box>
+
+                            <Divider orientation="vertical" flexItem />
+                            <Box>
+                              <TransactionProgressStepper
+                                transaction={transaction}
+                                txIndex={transactionsList?.length - index - 1}
+                                confirmationsRequired={parseInt(
+                                  confirmationsRequired
+                                )}
+                              />
+                            </Box>
+                          </Box>
                         </AccordionDetails>
                       </Accordion>
                     );
@@ -243,22 +282,129 @@ const Transactions = (props: Props) => {
                 ?.map((transaction: any, index: number) => {
                   if (transaction?.executed === true) {
                     return (
-                      <Accordion key={transaction?.to + index}>
-                        <AccordionSummary expandIcon={<ExpandMore />}>
-                          <Typography>
-                            {transactionsList.length - index}
-                          </Typography>
+                      <Accordion
+                        key={transaction?.to + index}
+                        sx={{
+                          my: 1.5,
+                          borderRadius: "4px !important",
+                          "&::before": { height: 0 },
+                        }}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMore />}
+                          sx={{
+                            "&.MuiAccordionSummary-root.Mui-expanded": {
+                              minHeight: "50px",
+                            },
+                            "& > .MuiAccordionSummary-content.Mui-expanded": {
+                              m: "12px 0",
+                            },
+                          }}
+                        >
+                          <Stack
+                            direction="row"
+                            spacing={2}
+                            alignItems="center"
+                            width="100%"
+                          >
+                            <Box flexBasis="10%" maxWidth="10%">
+                              <Typography>
+                                <Typography component="span" fontWeight="600">
+                                  Tx:{" "}
+                                </Typography>
+                                {index + 1}
+                              </Typography>
+                            </Box>
+
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              gap={1.2}
+                              flexBasis="20%"
+                              maxWidth="20%"
+                            >
+                              <CallMade sx={{ color: "primary.buttonColor" }} />
+                              <Typography>Sent</Typography>
+                            </Box>
+
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              gap={1.2}
+                              flexBasis="25%"
+                              maxWidth="25%"
+                            >
+                              <Image
+                                src="/asset/images/ethLogo.png"
+                                height={26}
+                                width={26}
+                                className="rounded-full object-cover"
+                                alt=""
+                              />
+                              <Typography>
+                                {formatEther(parseInt(transaction?.value))} ETH
+                              </Typography>
+                            </Box>
+
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              gap={1.2}
+                              flexBasis="25%"
+                              maxWidth="25%"
+                            >
+                              <PeopleAltOutlined />
+                              <Typography>
+                                {parseInt(transaction?.numConfirmations)} out of{" "}
+                                {parseInt(confirmationsRequired)}
+                              </Typography>
+                            </Box>
+
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: "primary.buttonColor",
+                                flexBasis: "20%",
+                                maxWidth: "20%",
+                                textAlign: "center",
+                                fontWeight: "600",
+                              }}
+                            >
+                              Success
+                            </Typography>
+                          </Stack>
                         </AccordionSummary>
-                        <AccordionDetails>
-                          <Typography>send to : {transaction?.to}</Typography>
-                          <Typography>
-                            value : {formatEther(parseInt(transaction?.value))}{" "}
-                            ETH
-                          </Typography>
-                          <Typography>
-                            numConfirmations :{" "}
-                            {parseInt(transaction?.numConfirmations)}
-                          </Typography>
+                        <Divider />
+                        <AccordionDetails sx={{ pt: 2 }}>
+                          <Box display="flex" alignItems="top" gap={3}>
+                            <Box>
+                              <Typography variant="body1">
+                                Send{" "}
+                                <Typography
+                                  variant="body1"
+                                  component="span"
+                                  sx={{ fontWeight: "700" }}
+                                >
+                                  {formatEther(parseInt(transaction?.value))}{" "}
+                                </Typography>
+                                ETH to:
+                              </Typography>
+                              <Box my={1}>
+                                <AccountAvatar toAddress={transaction?.to} />
+                              </Box>
+                            </Box>
+
+                            <Divider orientation="vertical" flexItem />
+                            <Box>
+                              <TransactionProgressStepper
+                                transaction={transaction}
+                                txIndex={transactionsList?.length - index - 1}
+                                confirmationsRequired={parseInt(
+                                  confirmationsRequired
+                                )}
+                              />
+                            </Box>
+                          </Box>
                         </AccordionDetails>
                       </Accordion>
                     );

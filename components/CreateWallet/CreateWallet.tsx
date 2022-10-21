@@ -55,7 +55,7 @@ const CreateWallet = () => {
     parseInt(totalWallet)
   );
 
-  console.log({ walletList, totalWallet: parseInt(totalWallet) });
+  // console.log({ walletList, totalWallet: parseInt(totalWallet) });
 
   const createWallet = async () => {
     setDisabledBtn(true);
@@ -180,7 +180,7 @@ const CreateWallet = () => {
                 disabled={activeStep === 0}
                 sx={{
                   color: "primary.buttonColor",
-                  p: "auto 12px",
+                  px: "12px",
                   width: "100px",
                 }}
               >
@@ -192,7 +192,7 @@ const CreateWallet = () => {
                 sx={{
                   backgroundColor: "primary.buttonColor",
                   color: "primary.contrastText",
-                  p: "auto 12px",
+                  px: "12px",
                   width: "100px",
                   "&:hover": {
                     backgroundColor: "primary.buttonColor",

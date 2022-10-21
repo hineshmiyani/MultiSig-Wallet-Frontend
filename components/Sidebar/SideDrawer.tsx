@@ -48,7 +48,7 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: 290 }}
+      sx={{ width: 350 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}

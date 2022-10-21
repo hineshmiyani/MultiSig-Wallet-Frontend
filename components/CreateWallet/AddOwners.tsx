@@ -59,7 +59,7 @@ const AddOwners = () => {
   };
 
   useEffect(() => {
-    console.log({ ownersList, requiredConfirmations, ownerCount });
+    // console.log({ ownersList, requiredConfirmations, ownerCount });
     const newOwnersList = ownersList.filter((val) => val !== "");
     return () => {
       sessionStorage.setItem(

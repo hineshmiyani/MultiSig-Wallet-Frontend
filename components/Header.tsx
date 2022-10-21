@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <header className="header">
       {/* Logo Section  */}
-      <Link href="/">
+      <Link href="/welcome">
         <Box
           sx={{
             display: "flex",

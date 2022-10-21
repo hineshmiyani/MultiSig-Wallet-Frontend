@@ -22,7 +22,7 @@ type Props = {};
 
 const Sidebar = (props: Props) => {
   const router = useRouter();
-  const { id: walletId } = router?.query;
+  const { id: walletId }: any = router?.query;
   const { account, library } = useEthers();
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
 
@@ -32,7 +32,7 @@ const Sidebar = (props: Props) => {
     parseInt(totalWallet)
   );
 
-  const etherBalance = useEtherBalance(walletList?.[0]);
+  const etherBalance = useEtherBalance(walletList?.[+walletId]);
 
   // useEffect(() => {
   //   console.log({

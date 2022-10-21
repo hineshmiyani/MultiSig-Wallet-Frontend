@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { formatEther } from "ethers/lib/utils";
 import { useEthers } from "@usedapp/core";
@@ -25,10 +26,10 @@ import {
   useGetTransactions,
   useNumConfirmationsRequired,
 } from "../../../../hooks";
-import Image from "next/image";
 import {
   AccountAvatar,
   TransactionProgressStepper,
+  TxNotFound,
 } from "../../../../components";
 
 interface TabPanelProps {
@@ -37,7 +38,7 @@ interface TabPanelProps {
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
+const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -51,16 +52,18 @@ function TabPanel(props: TabPanelProps) {
       {value === index && <Box sx={{ py: 2.5 }}>{children}</Box>}
     </Box>
   );
-}
+};
 
-function a11yProps(index: number) {
+const a11yProps = (index: number) => {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
-}
+};
 
 type Props = {};
+const queueText = "Queued transactions will appear here";
+const completedText = "Completed transactions will appear here";
 const Transactions = (props: Props) => {
   const router = useRouter();
   const { id: walletId } = router?.query;
@@ -273,6 +276,9 @@ const Transactions = (props: Props) => {
                   }
                   return null;
                 })}
+              {transactionsList.filter(
+                (transaction: any) => transaction?.executed === false
+              )?.length === 0 && <TxNotFound text={queueText} />}
             </Box>
           </TabPanel>
           <TabPanel value={value} index={1}>
@@ -411,6 +417,9 @@ const Transactions = (props: Props) => {
                   }
                   return null;
                 })}
+              {transactionsList.filter(
+                (transaction: any) => transaction?.executed === true
+              )?.length === 0 && <TxNotFound text={completedText} />}
             </Box>
           </TabPanel>
         </Box>

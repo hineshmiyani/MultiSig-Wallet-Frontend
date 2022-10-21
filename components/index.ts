@@ -12,3 +12,4 @@ export { default as WalletOwners } from "./Dashboard/WalletOwners";
 export { default as WalletDetails } from "./Dashboard/WalletDetails";
 export { default as AccountAvatar } from "./AccountAvatar";
 export { default as TransactionProgressStepper } from "./Transaction/TransactionProgressStepper";
+export { default as TxNotFound } from "./Transaction/TxNotFound";

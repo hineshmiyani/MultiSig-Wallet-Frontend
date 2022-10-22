@@ -16,10 +16,13 @@ const Layout: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (!account) {
-      router.push({
-        pathname: "/login",
-        query: { redirect_url: router?.route },
-      });
+      debugger;
+      if (router?.isReady) {
+        router.push({
+          pathname: "/login",
+          query: { redirect_url: router?.pathname },
+        });
+      }
     }
   }, [account]);
 

@@ -6,25 +6,43 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Sidebar from "./Sidebar/Sidebar";
 import { useRouter } from "next/router";
 import { useEthers } from "@usedapp/core";
+import { useIsOwner } from "../hooks";
 interface Props {
   children: JSX.Element;
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
   const router = useRouter();
+  const { walletAddress, id: walletId } = router.query;
   const { account, isLoading } = useEthers();
+  const isOwner = useIsOwner([
+    account && account?.toString(),
+    walletAddress && walletAddress,
+  ]);
 
   useEffect(() => {
-    if (!account) {
-      debugger;
-      if (router?.isReady) {
+    if (!account && router?.isReady) {
+      if (router?.route?.includes("dashboard")) {
+        router.push({
+          pathname: "/login",
+          query: { redirect_url: "/welcome" },
+        });
+      } else {
         router.push({
           pathname: "/login",
           query: { redirect_url: router?.pathname },
         });
       }
     }
-  }, [account]);
+
+    setTimeout(() => {
+      if (account && router?.isReady) {
+        if (!isOwner?.[0]) {
+          router.push("/welcome");
+        }
+      }
+    }, 1500);
+  }, [account, isOwner]);
 
   if (router?.route?.includes("login")) {
     return (

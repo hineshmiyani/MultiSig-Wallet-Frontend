@@ -94,7 +94,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
 
   const { account, library } = useEthers();
   const accountBalance = useEtherBalance(account?.toString());
-  const walletBalance = useEtherBalance(walletAddress);
+  const walletBalance: any = useEtherBalance(walletAddress);
   const { state: depositTxState, send: deposit } = useContractFunction(
     contract,
     "deposit"
@@ -107,7 +107,8 @@ const MakeTransactionDialog: React.FC<Props> = ({
   const depositEther = () => {
     setDisabledBtn(true);
     depositAmount !== 0 &&
-      deposit(account, 0, {
+      walletId &&
+      deposit(account, +walletId, {
         value: utils.parseEther(depositAmount.toString()),
       });
   };
@@ -116,9 +117,10 @@ const MakeTransactionDialog: React.FC<Props> = ({
     setDisabledBtn(true);
     sendAmount !== 0 &&
       recipientAddress &&
+      walletId &&
       submitTx(
         account,
-        0,
+        +walletId,
         recipientAddress,
         parseEther(sendAmount?.toString()),
         "0x00"

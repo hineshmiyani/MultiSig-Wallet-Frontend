@@ -40,9 +40,9 @@ const Login = () => {
       >
         <Stack alignItems="center">
           <Image
-            src="/asset/images/wallet.svg"
-            height={140}
-            width={140}
+            src="/asset/images/pakitLogo.png"
+            height={160}
+            width={160}
             className="rounded-full object-cover"
             alt=""
           />
@@ -54,14 +54,13 @@ const Login = () => {
             sx={{
               color: "primary.main",
               fontWeight: "bold",
-              mt: "24px",
-              mb: "10px",
+              mb: "14px",
             }}
           >
-            MultiSignature Wallet
+            Open your Pakit
           </Typography>
-          <Typography variant="h5" gutterBottom sx={{ color: "primary.main" }}>
-            Get Started by Logging in with your Wallet.
+          <Typography variant="h6" gutterBottom sx={{ color: "primary.main" }}>
+            Get Started by Logging in with your Metamsk Wallet.
           </Typography>
           <Button
             variant="contained"

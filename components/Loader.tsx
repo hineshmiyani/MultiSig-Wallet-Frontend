@@ -28,7 +28,7 @@ const Loader = () => {
           sx={{ mb: "40px" }}
         >
           <Image
-            src="/asset/images/wallet.svg"
+            src="/asset/images/pakitLogo.png"
             height={100}
             width={100}
             className="rounded-full object-cover shadow-slate-400 shadow-md"

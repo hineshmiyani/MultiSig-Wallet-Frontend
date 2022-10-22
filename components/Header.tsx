@@ -27,9 +27,9 @@ const Header = () => {
           }}
         >
           <Image
-            src="/asset/images/wallet.svg"
-            height={45}
-            width={45}
+            src="/asset/images/pakitLogo.png"
+            height={34}
+            width={34}
             className="rounded-full object-cover"
             alt=""
           />
@@ -37,7 +37,7 @@ const Header = () => {
             variant="h6"
             sx={{ color: "primary.main", fontWeight: "600", ml: 1 }}
           >
-            MultiSig
+            Pakit
           </Typography>
         </Box>
       </Link>

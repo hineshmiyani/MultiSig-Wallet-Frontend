@@ -208,7 +208,9 @@ const Transactions = (props: Props) => {
                                 alt=""
                               />
                               <Typography>
-                                {formatEther(parseInt(transaction?.value))} ETH
+                                {transaction?.value &&
+                                  formatEther(transaction?.value)}{" "}
+                                ETH
                               </Typography>
                             </Box>
 
@@ -250,7 +252,7 @@ const Transactions = (props: Props) => {
                                   component="span"
                                   sx={{ fontWeight: "700" }}
                                 >
-                                  {formatEther(parseInt(transaction?.value))}{" "}
+                                  {formatEther(transaction?.value)}{" "}
                                 </Typography>
                                 ETH to:
                               </Typography>
@@ -348,7 +350,7 @@ const Transactions = (props: Props) => {
                                 alt=""
                               />
                               <Typography>
-                                {formatEther(parseInt(transaction?.value))} ETH
+                                {formatEther(transaction?.value)} ETH
                               </Typography>
                             </Box>
 
@@ -391,7 +393,7 @@ const Transactions = (props: Props) => {
                                   component="span"
                                   sx={{ fontWeight: "700" }}
                                 >
-                                  {formatEther(parseInt(transaction?.value))}{" "}
+                                  {formatEther(transaction?.value)}{" "}
                                 </Typography>
                                 ETH to:
                               </Typography>

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { ContentCopyRounded } from "@mui/icons-material";
 import { Stack, Typography, Tooltip, IconButton } from "@mui/material";
 import { useEthers } from "@usedapp/core";

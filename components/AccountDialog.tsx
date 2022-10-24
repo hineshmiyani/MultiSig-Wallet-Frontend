@@ -64,7 +64,7 @@ const AccountDialog = () => {
         }}
       >
         <Stack py={1} px={2} spacing={1} alignItems="center">
-          <Image
+          <img
             src="/asset/images/avatar.png"
             width="60"
             height="60"

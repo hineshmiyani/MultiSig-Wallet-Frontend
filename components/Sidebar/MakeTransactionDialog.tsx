@@ -310,7 +310,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
               </Typography>
 
               <Stack direction="row" alignItems="center" spacing={1.2}>
-                <Image
+                <img
                   src="/asset/images/avatar.png"
                   alt=""
                   width={34}
@@ -421,7 +421,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
               </Typography>
 
               <Stack direction="row" alignItems="center" spacing={1.2}>
-                <Image
+                <img
                   src="/asset/images/walletAvatar.png"
                   alt=""
                   width={34}

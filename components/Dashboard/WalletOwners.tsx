@@ -87,7 +87,7 @@ const WalletOwners: React.FC<Props> = () => {
       align: "center",
       headerAlign: "center",
       renderCell: (params: GridRenderCellParams) => (
-        <Image
+        <img
           src={params.value}
           width="34"
           height="34"

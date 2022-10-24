@@ -70,7 +70,7 @@ const Review = () => {
                   direction="row"
                   alignItems="center"
                 >
-                  <Image
+                  <img
                     src="/asset/images/avatar.png"
                     width="32"
                     height="32"

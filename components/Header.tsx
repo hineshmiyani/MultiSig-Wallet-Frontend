@@ -26,7 +26,7 @@ const Header = () => {
             cursor: "pointer",
           }}
         >
-          <Image
+          <img
             src="/asset/images/pakitLogo.png"
             height={34}
             width={34}
@@ -44,7 +44,7 @@ const Header = () => {
 
       {/* Account Section */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Image src="/asset/images/metamask.svg" alt="" width={30} height={30} />
+        <img src="/asset/images/metamask.svg" alt="" width={30} height={30} />
         <Stack>
           <Typography variant="body2" sx={{ color: "primary.main" }}>
             MetaMask @
@@ -53,7 +53,7 @@ const Header = () => {
               library?.network?.name?.substring(1)}
           </Typography>
           <Stack direction="row" alignItems="center" spacing="8px">
-            <Image
+            <img
               src="/asset/images/avatar.png"
               alt=""
               width={12}

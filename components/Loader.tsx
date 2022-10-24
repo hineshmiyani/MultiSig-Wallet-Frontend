@@ -27,7 +27,7 @@ const Loader = () => {
           spacing={1}
           sx={{ mb: "40px" }}
         >
-          <Image
+          <img
             src="/asset/images/pakitLogo.png"
             height={100}
             width={100}

@@ -1,7 +1,7 @@
 import { utils } from "ethers";
 import { Contract } from "@ethersproject/contracts";
 import multiSigFactoryAbi from "./MultiSigFactoryAbi.json";
-import contractAddresses from "./contractAddresses.json";
+import contractAddresses from "./ContractAddresses.json";
 
 const contractAddressList: any = contractAddresses;
 export const multiSigFactoryInterface = new utils.Interface(multiSigFactoryAbi);

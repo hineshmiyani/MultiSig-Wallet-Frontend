@@ -16,43 +16,45 @@ const Layout: React.FC<Props> = ({ children }) => {
   const { walletAddress, id: walletId } = router.query;
 
   const { account, isLoading } = useEthers();
-  // const totalWallet = useGetWalletsCount([account?.toString()]);
-  // const walletList = useGetWallets(
-  //   [account?.toString()],
-  //   parseInt(totalWallet)
-  // );
+  const totalWallet = useGetWalletsCount([account?.toString()]);
+  const walletList = useGetWallets(
+    [account?.toString()],
+    parseInt(totalWallet)
+  );
   const isOwner = useIsOwner([
     account && account?.toString(),
     walletAddress && walletAddress,
   ]);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (!account && router?.isReady) {
-        if (router?.route?.includes("dashboard")) {
-          router.push({
-            pathname: "/login",
-            query: { redirect_url: "/welcome" },
-          });
-        } else {
-          router.push({
-            pathname: "/login",
-            query: { redirect_url: router?.pathname },
-          });
-        }
-      } else if (account && router?.isReady) {
-        // const walletIndex = walletList.indexOf(walletAddress);
-        if (isOwner?.[0]) {
-          // router.push({
-          //   pathname: `/dashboard/${walletAddress}`,
-          //   query: { id: walletIndex >= 0 ? walletIndex : 0 },
-          // });
-        } else {
+    if (!account && router?.isReady) {
+      if (router?.route?.includes("dashboard")) {
+        router.push({
+          pathname: "/login",
+          query: { redirect_url: "/welcome" },
+        });
+      } else {
+        router.push({
+          pathname: "/login",
+          query: { redirect_url: router?.pathname },
+        });
+      }
+    } else if (account && router?.isReady) {
+      setTimeout(() => {
+        const walletIndex = walletList.indexOf(walletAddress);
+        if (isOwner?.[0] === true) {
+          console.log({ walletIndex, walletId });
+          walletIndex != walletId &&
+            router.push({
+              pathname: `/dashboard/${walletAddress}`,
+              query: { id: walletIndex >= 0 ? walletIndex : 0 },
+            });
+        } else if (isOwner?.[0] === false) {
           router.push("/welcome");
         }
-      }
-    }, 1500);
-  }, [account]);
+      }, 2000);
+    }
+  }, [account, isOwner?.[0]]);
 
   if (router?.route?.includes("login")) {
     return (

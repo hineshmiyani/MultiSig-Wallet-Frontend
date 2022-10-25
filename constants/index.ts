@@ -13,4 +13,4 @@ export const contract = new Contract(
   multiSigFactoryInterface
 );
 
-export const APP_NAME = "Multisig Wallet";
+export const APP_NAME = "Pakit";

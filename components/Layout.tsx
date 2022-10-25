@@ -58,7 +58,7 @@ const Layout: React.FC<Props> = ({ children }) => {
     return (
       <>
         <Head>
-          <title>Multisig Wallet</title>
+          <title>Pakit</title>
         </Head>
         {children}
       </>
@@ -68,7 +68,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Multisig Wallet</title>
+        <title>Pakit</title>
       </Head>
 
       {/* Header */}

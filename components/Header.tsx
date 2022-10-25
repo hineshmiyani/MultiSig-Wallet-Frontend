@@ -30,7 +30,7 @@ const Header = () => {
             src="/asset/images/pakitLogo.png"
             height={34}
             width={34}
-            className="rounded-full object-cover"
+            className="object-cover"
             alt=""
           />
           <Typography

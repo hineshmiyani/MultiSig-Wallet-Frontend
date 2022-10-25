@@ -8,24 +8,6 @@ import { useRouter } from "next/router";
 const Main = () => {
   const router = useRouter();
   const { account, isLoading } = useEthers();
-  // const { chainId } = useEthers();
-  // let contractAddressList: any = contractAddresses;
-
-  // const multiSigWalletInterface = new utils.Interface(multiSigWalletAbi);
-  // const multiSigWalletAddress =
-  //   chainId && contractAddressList?.[`${chainId}`]?.["MultiSigWallet"][0];
-  // const contract = new Contract(multiSigWalletAddress, multiSigWalletInterface);
-
-  // const { value } = useCall({
-  //   contract: contract,
-  //   method: "getOwners",
-  //   args: [],
-  // });
-
-  // const callOwners = async () => {
-  //   console.log("owners:", value);
-  // };
-
   useEffect(() => {
     if (!account) {
       router.push({
@@ -37,7 +19,7 @@ const Main = () => {
     }
   }, [account]);
 
-  return <Container maxWidth="xl">Main</Container>;
+  return <Container maxWidth="xl"></Container>;
 };
 
 export default Main;

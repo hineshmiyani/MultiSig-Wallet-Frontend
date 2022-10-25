@@ -14,7 +14,7 @@ const Login = () => {
       if (redirect_url && !redirect_url.includes("login")) {
         router.push(`${redirect_url}`);
       } else {
-        router.push("/");
+        router.push("/welcome");
       }
     }
   }, [account]);
@@ -43,12 +43,9 @@ const Login = () => {
             src="/asset/images/pakitLogo.png"
             height={160}
             width={160}
-            className="rounded-full object-cover"
+            className="object-cover"
             alt=""
           />
-          {/* <AccountBalanceWalletIcon
-            sx={{ color: "primary.contrastText", fontSize: "100px" }}
-          /> */}
           <Typography
             variant="h1"
             sx={{

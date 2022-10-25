@@ -79,7 +79,7 @@ const Welcome = (props: Props) => {
               <Typography variant="body1">
                 Create a new Wallet that is controlled by one or multiple
                 owners. You will be required to pay a network fee for creating
-                your new Safe.
+                your new Wallet.
               </Typography>
             </CardContent>
             <CardActions sx={{ p: "30px 24px" }}>

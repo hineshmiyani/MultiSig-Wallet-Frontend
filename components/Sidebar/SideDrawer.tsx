@@ -1,10 +1,10 @@
-import { AddCircleOutlined, Folder, Inbox, Mail } from "@mui/icons-material";
+import React from "react";
+import { AddCircleOutlined } from "@mui/icons-material";
 import {
   Box,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Divider,
   Button,
@@ -12,12 +12,9 @@ import {
   IconButton,
   Stack,
   Typography,
-  ListItemAvatar,
-  Avatar,
 } from "@mui/material";
-import { useEthers } from "@usedapp/core";
+import Wallet from "./Wallet";
 import { useRouter } from "next/router";
-import React from "react";
 
 type Props = {
   walletList: string[];
@@ -25,12 +22,9 @@ type Props = {
 type Anchor = "left";
 const SideDrawer: React.FC<Props> = ({ walletList }) => {
   const router = useRouter();
-  const { walletAddress } = router?.query;
   const [state, setState] = React.useState({
     left: false,
   });
-
-  const { library } = useEthers();
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -113,46 +107,7 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
       </List>
       <List>
         {walletList.map((wallet, index) => (
-          <ListItem key={wallet} disablePadding>
-            <ListItemButton
-              sx={{
-                backgroundColor: wallet === walletAddress ? "grey.300" : "",
-                py: "10px",
-                px: 4,
-              }}
-              onClick={() =>
-                router.push({
-                  pathname: `/dashboard/${wallet}`,
-                  query: { id: index },
-                })
-              }
-            >
-              <ListItemAvatar>
-                <Avatar
-                  src="/asset/images/walletAvatar.png"
-                  sx={{ width: 38, height: 38 }}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <>
-                    <Typography variant="body1">
-                      <Typography
-                        variant="body1"
-                        component="span"
-                        fontWeight="bold"
-                      >
-                        {library?.network?.name?.substring(0, 2)}
-                        {library?.network?.name?.substring(3, 4)}:
-                      </Typography>{" "}
-                      {wallet?.slice(0, 6)}
-                      ...{wallet?.slice(-4)}
-                    </Typography>
-                  </>
-                }
-              />
-            </ListItemButton>
-          </ListItem>
+          <Wallet key={wallet} wallet={wallet} walletId={index} />
         ))}
 
         {walletList.length === 0 && (

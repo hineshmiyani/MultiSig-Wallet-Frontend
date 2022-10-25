@@ -31,10 +31,9 @@ const AddOwners = () => {
     return 1;
   });
   const [ownersList, setOwnersList] = useState<any[]>(() => {
-    if (sessionStorage.getItem("ownersData")) {
-      const { ownersList } = JSON.parse(
-        sessionStorage.getItem("ownersData") || ""
-      );
+    const ownersData = sessionStorage.getItem("ownersData");
+    if (ownersData) {
+      const { ownersList } = JSON.parse(ownersData || "");
       return ownersList.length > 0 && ownersList[0] !== ""
         ? ownersList
         : [account];
@@ -44,13 +43,10 @@ const AddOwners = () => {
 
   const [requiredConfirmations, setRequiredConfirmations] = useState<string>(
     () => {
-      if (sessionStorage.getItem("ownersData")) {
-        const { requiredConfirmations } = JSON.parse(
-          sessionStorage.getItem("ownersData") || ""
-        );
-        return requiredConfirmations;
-      }
-      return "1";
+      const ownersData = sessionStorage.getItem("ownersData");
+      return ownersData
+        ? JSON.parse(ownersData || "")?.requiredConfirmations
+        : "1";
     }
   );
 

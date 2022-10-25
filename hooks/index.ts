@@ -18,11 +18,14 @@ export function useGetOwners(args: any[]) {
 
 export function useIsOwner(args: any[]) {
   const { value, error } =
-    useCall({
-      contract: contract,
-      method: "isOwner",
-      args: args,
-    }) ?? {};
+    useCall(
+      args?.[0] &&
+        args?.[1] && {
+          contract: contract,
+          method: "isOwner",
+          args: args,
+        }
+    ) ?? {};
 
   if (error) {
     console.log("Error: ", error.message);
@@ -38,6 +41,23 @@ export function useIsUserExists(args: any[]) {
       method: "userExists",
       args: args,
     }) ?? {};
+
+  if (error) {
+    console.log("Error: ", error.message);
+    return undefined;
+  }
+  return value;
+}
+
+export function useGetWalletName(args: any[]) {
+  const { value, error } =
+    useCall(
+      args[0] && {
+        contract: contract,
+        method: "returnWalletName",
+        args: args,
+      }
+    ) ?? {};
 
   if (error) {
     console.log("Error: ", error.message);

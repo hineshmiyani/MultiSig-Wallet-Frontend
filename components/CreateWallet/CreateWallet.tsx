@@ -19,20 +19,16 @@ import { contract } from "../../constants";
 import toast from "react-hot-toast";
 import { useGetWallets, useGetWalletsCount } from "../../hooks";
 
-const steps = [
-  "Connect Wallet",
-  /* "Name", */ "Owners and Confirmations",
-  "Review",
-];
+const steps = ["Connect Wallet", "Name", "Owners and Confirmations", "Review"];
 const getStepDescription = (step: number) => {
   switch (step) {
     case 0:
       return <ConnectWallet />;
-    // case 1:
-    //   return <NameOfWallet />;
     case 1:
-      return <AddOwners />;
+      return <NameOfWallet />;
     case 2:
+      return <AddOwners />;
+    case 3:
       return <Review />;
   }
 };
@@ -59,16 +55,19 @@ const CreateWallet = () => {
 
   const createWallet = async () => {
     setDisabledBtn(true);
+    const ownersData = sessionStorage.getItem("ownersData");
+    const walletName =
+      sessionStorage.getItem("walletName") &&
+      JSON.parse(sessionStorage.getItem("walletName") || "");
     const { ownersList, requiredConfirmations } =
-      sessionStorage.getItem("ownersData") &&
-      JSON.parse(sessionStorage.getItem("ownersData") || "");
-    // console.log({ ownersList, requiredConfirmations });
-    send(ownersList, requiredConfirmations);
+      ownersData && JSON.parse(ownersData || "");
+    // console.log({ ownersList, requiredConfirmations, walletName });
+    send(ownersList, requiredConfirmations, walletName);
   };
 
   useEffect(() => {
     console.log({ state });
-    let loadingToast, confirmTxWallet;
+    let loadingToast, confirmTxWallet, successToast: string | undefined;
     switch (state.status) {
       case "PendingSignature":
         confirmTxWallet = toast.loading("Please Confirm Transaction...");
@@ -79,7 +78,15 @@ const CreateWallet = () => {
         break;
       case "Success":
         toast.dismiss(loadingToast);
-        toast.success("Wallet successfully created!", { duration: 10000 });
+        successToast = toast.success("Wallet successfully created!", {
+          duration: 5000,
+        });
+        setTimeout(() => {
+          toast.dismiss(successToast);
+          toast.loading("Redirecting to the wallet...", {
+            duration: 5000,
+          });
+        }, 5000);
         setDisabledBtn(false);
         break;
       case "Exception":
@@ -105,6 +112,7 @@ const CreateWallet = () => {
             query: { id: walletList.length - 1 },
           });
           sessionStorage.removeItem("ownersData");
+          sessionStorage.removeItem("walletName");
         }
       }, 10000);
     }

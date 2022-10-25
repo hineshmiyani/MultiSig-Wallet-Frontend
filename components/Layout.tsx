@@ -6,7 +6,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Sidebar from "./Sidebar/Sidebar";
 import { useRouter } from "next/router";
 import { useEthers } from "@usedapp/core";
-import { useIsOwner } from "../hooks";
+import { useGetWallets, useGetWalletsCount, useIsOwner } from "../hooks";
 interface Props {
   children: JSX.Element;
 }
@@ -14,35 +14,45 @@ interface Props {
 const Layout: React.FC<Props> = ({ children }) => {
   const router = useRouter();
   const { walletAddress, id: walletId } = router.query;
+
   const { account, isLoading } = useEthers();
+  // const totalWallet = useGetWalletsCount([account?.toString()]);
+  // const walletList = useGetWallets(
+  //   [account?.toString()],
+  //   parseInt(totalWallet)
+  // );
   const isOwner = useIsOwner([
     account && account?.toString(),
     walletAddress && walletAddress,
   ]);
 
   useEffect(() => {
-    if (!account && router?.isReady) {
-      if (router?.route?.includes("dashboard")) {
-        router.push({
-          pathname: "/login",
-          query: { redirect_url: "/welcome" },
-        });
-      } else {
-        router.push({
-          pathname: "/login",
-          query: { redirect_url: router?.pathname },
-        });
-      }
-    }
-
     setTimeout(() => {
-      if (account && router?.isReady) {
-        if (!isOwner?.[0]) {
+      if (!account && router?.isReady) {
+        if (router?.route?.includes("dashboard")) {
+          router.push({
+            pathname: "/login",
+            query: { redirect_url: "/welcome" },
+          });
+        } else {
+          router.push({
+            pathname: "/login",
+            query: { redirect_url: router?.pathname },
+          });
+        }
+      } else if (account && router?.isReady) {
+        // const walletIndex = walletList.indexOf(walletAddress);
+        if (isOwner?.[0]) {
+          // router.push({
+          //   pathname: `/dashboard/${walletAddress}`,
+          //   query: { id: walletIndex >= 0 ? walletIndex : 0 },
+          // });
+        } else {
           router.push("/welcome");
         }
       }
     }, 1500);
-  }, [account, isOwner]);
+  }, [account]);
 
   if (router?.route?.includes("login")) {
     return (

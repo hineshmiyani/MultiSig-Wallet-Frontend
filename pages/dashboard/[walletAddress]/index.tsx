@@ -14,15 +14,10 @@ type Props = {
 };
 
 const Dashboard: React.FC<Props> = ({ params }) => {
-  const { library } = useEthers();
-  const router = useRouter();
-  const { walletAddress }: any = router?.query;
-  const { id: walletId } = router?.query;
-
   return (
     <>
       <Container>
-        {walletAddress && <WalletDetails walletAddress={walletAddress} />}
+        <WalletDetails />
         <WalletOwners />
       </Container>
     </>

@@ -11,7 +11,12 @@ import {
   Typography,
 } from "@mui/material";
 import { AddCircleOutlined, ContentCopyRounded } from "@mui/icons-material";
-import { useGetOwners, useGetWallets, useGetWalletsCount } from "../../hooks";
+import {
+  useGetOwners,
+  useGetWalletName,
+  useGetWallets,
+  useGetWalletsCount,
+} from "../../hooks";
 import ShareIcon from "../ShareIcon";
 import Image from "next/image";
 import { formatEther } from "@ethersproject/units";
@@ -26,6 +31,7 @@ const Sidebar = (props: Props) => {
   const { account, library } = useEthers();
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
 
+  const walletName = useGetWalletName([account?.toString(), +walletId]);
   const totalWallet = useGetWalletsCount([account?.toString()]);
   const walletList = useGetWallets(
     [account?.toString()],
@@ -101,15 +107,24 @@ const Sidebar = (props: Props) => {
                 alt=""
                 className="rounded-full object-cover"
               />
-              <Typography variant="body2">
-                <Typography variant="caption" fontWeight="bold">
-                  {library?.network?.name?.substring(0, 2)}
-                  {library?.network?.name?.substring(3, 4)}:
-                </Typography>{" "}
-                {wallet?.slice(0, 6)}
-                ...{wallet?.slice(-4)}
-              </Typography>
-
+              <Box>
+                <Typography
+                  variant="body1"
+                  fontWeight="600"
+                  textAlign="center"
+                  gutterBottom
+                >
+                  {walletName}
+                </Typography>
+                <Typography variant="body2">
+                  <Typography variant="caption" fontWeight="bold">
+                    {library?.network?.name?.substring(0, 2)}
+                    {library?.network?.name?.substring(3, 4)}:
+                  </Typography>{" "}
+                  {wallet?.slice(0, 6)}
+                  ...{wallet?.slice(-4)}
+                </Typography>
+              </Box>
               <Stack direction="row" spacing={1} alignItems="center">
                 <Tooltip title={tooltipTitle} placement="top">
                   <IconButton
@@ -143,7 +158,6 @@ const Sidebar = (props: Props) => {
                   </IconButton>
                 </Tooltip>
               </Stack>
-
               <Stack alignItems="center">
                 <Typography
                   variant="body1"
@@ -159,7 +173,6 @@ const Sidebar = (props: Props) => {
                   {etherBalance ? formatEther(etherBalance) : 0.0} ETH
                 </Typography>
               </Stack>
-
               <MakeTransactionDialog walletAddress={wallet}>
                 <Button
                   sx={{
@@ -178,7 +191,6 @@ const Sidebar = (props: Props) => {
                   New Transaction
                 </Button>
               </MakeTransactionDialog>
-
               {/* Dashboard */}
               <Button
                 sx={{
@@ -203,7 +215,6 @@ const Sidebar = (props: Props) => {
               >
                 Dashboard
               </Button>
-
               {/* Transactions */}
               <Button
                 sx={{

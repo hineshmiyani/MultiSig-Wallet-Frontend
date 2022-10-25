@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEtherBalance, useEthers } from "@usedapp/core";
 import { formatEther } from "@ethersproject/units";
 import {
@@ -13,11 +14,19 @@ import {
   Button,
 } from "@mui/material";
 import MakeTransectionDialog from "../Sidebar/MakeTransactionDialog";
+import { useGetWalletName } from "../../hooks";
 
-type Props = { walletAddress: string };
+type Props = {};
+const WalletDetails: React.FC<Props> = () => {
+  const router = useRouter();
+  const { walletAddress }: any = router?.query;
+  const { id: walletId } = router?.query;
 
-const WalletDetails: React.FC<Props> = ({ walletAddress }) => {
-  const { library } = useEthers();
+  const { account, library } = useEthers();
+  const walletName = useGetWalletName([
+    account?.toString(),
+    walletId && +walletId,
+  ]);
   const etherBalance = useEtherBalance(walletAddress);
 
   return (
@@ -56,7 +65,10 @@ const WalletDetails: React.FC<Props> = ({ walletAddress }) => {
               alt=""
               className="rounded-full object-cover"
             />
-            <Typography variant="body1" sx={{ mt: 2 }}>
+            <Typography variant="body1" fontWeight="bold" mt={2} gutterBottom>
+              {walletName}
+            </Typography>{" "}
+            <Typography variant="body1">
               <Typography variant="body1" component="span" fontWeight="bold">
                 {library?.network?.name?.substring(0, 2)}
                 {library?.network?.name?.substring(3, 4)}:
@@ -74,7 +86,6 @@ const WalletDetails: React.FC<Props> = ({ walletAddress }) => {
                 top: "24px",
               }}
             />
-
             <Stack alignItems="center" direction="row" mt={1.5}>
               <Box>
                 <Typography

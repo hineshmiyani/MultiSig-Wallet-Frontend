@@ -136,7 +136,8 @@
         "internalType": "uint256",
         "name": "_numConfirmationsRequired",
         "type": "uint256"
-      }
+      },
+      { "internalType": "string", "name": "_walletName", "type": "string" }
     ],
     "name": "createMultiSig",
     "outputs": [],
@@ -268,6 +269,16 @@
   {
     "inputs": [
       { "internalType": "address", "name": "_user", "type": "address" },
+      { "internalType": "uint256", "name": "_contract", "type": "uint256" }
+    ],
+    "name": "returnWalletName",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_user", "type": "address" },
       { "internalType": "uint256", "name": "_contract", "type": "uint256" },
       { "internalType": "uint256", "name": "_txIndex", "type": "uint256" }
     ],
@@ -309,6 +320,19 @@
         "type": "address"
       }
     ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract MultiSigWallet",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "walletToName",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
     "stateMutability": "view",
     "type": "function"
   }

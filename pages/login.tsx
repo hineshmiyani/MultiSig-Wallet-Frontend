@@ -57,7 +57,7 @@ const Login = () => {
             Open your Pakit
           </Typography>
           <Typography variant="h6" gutterBottom sx={{ color: "primary.main" }}>
-            Get Started by Logging in with your Metamsk Wallet.
+            Get Started by Logging in with your Metamask Wallet.
           </Typography>
           <Button
             variant="contained"

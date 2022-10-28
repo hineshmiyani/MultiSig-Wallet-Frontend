@@ -61,6 +61,10 @@ const Layout: React.FC<Props> = ({ children }) => {
       <>
         <Head>
           <title>Pakit</title>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=0.3"
+          ></meta>
         </Head>
         {children}
       </>
@@ -71,6 +75,10 @@ const Layout: React.FC<Props> = ({ children }) => {
     <>
       <Head>
         <title>Pakit</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=0.3"
+        ></meta>
       </Head>
 
       {/* Header */}

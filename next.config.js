@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ["jsx", "tsx"],
   reactStrictMode: true,
   swcMinify: true,
   images: {

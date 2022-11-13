@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useEthers } from "@usedapp/core";
-import { ContentCopyRounded } from "@mui/icons-material";
 import {
   Paper,
   Typography,
@@ -12,10 +11,12 @@ import {
   Stack,
   Tooltip,
 } from "@mui/material";
+import { ContentCopyRounded } from "@mui/icons-material";
 import { ShareIcon } from "../../index";
+import { styles } from "./styles";
 
 const Review = () => {
-  const { account, library } = useEthers();
+  const { library } = useEthers();
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
   const [{ ownersList, requiredConfirmations }, setOwnerData] = useState<any>({
     ownersList: [],
@@ -30,14 +31,9 @@ const Review = () => {
   }, []);
 
   return (
-    <Paper
-      sx={{
-        my: "30px",
-        boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-      }}
-    >
+    <Paper sx={styles.container}>
       <Box display="flex">
-        <Box p={3} sx={{ maxWidth: "33%", flexBasis: "33%" }}>
+        <Box p={3} maxWidth="33%" flexBasis="33%">
           <Typography variant="body1" mb={3}>
             Details
           </Typography>
@@ -52,7 +48,7 @@ const Review = () => {
 
         <Divider orientation="vertical" flexItem />
 
-        <Box sx={{ maxWidth: "67%", flexBasis: "67%" }}>
+        <Box maxWidth="67%" flexBasis="67%">
           <Box p={3}>
             <Typography variant="body1">
               {ownersList.length} Wallet Owners
@@ -77,11 +73,7 @@ const Review = () => {
                     alt=""
                     className="rounded-full object-cover"
                   />
-                  <Typography
-                    variant="caption"
-                    component="p"
-                    sx={{ width: "340px" }}
-                  >
+                  <Typography variant="caption" component="p" width="340px">
                     <Typography variant="caption" fontWeight="bold">
                       {library?.network?.name?.substring(0, 2)}
                       {library?.network?.name?.substring(3, 4)}:
@@ -99,9 +91,7 @@ const Review = () => {
                         }, 1200);
                       }}
                     >
-                      <ContentCopyRounded
-                        sx={{ color: "disabled.main", fontSize: "16px" }}
-                      />
+                      <ContentCopyRounded sx={styles.copyIcon} />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="View on goerli.etherscan.io" placement="top">
@@ -128,17 +118,10 @@ const Review = () => {
       <Box p={3}>
         <Typography variant="body1" component="div" gutterBottom>
           You&apos;re about to create a new Safe{" "}
-          <Chip
-            label={library?.network?.name}
-            sx={{
-              backgroundColor: "warning.light",
-              fontWeight: "500",
-              color: "white",
-            }}
-          />{" "}
-          on Goerli and will have to confirm a transaction with your currently
-          connected wallet. The creation will cost approximately &gt; 0.001 GOR.
-          The exact amount will be determined by your wallet.
+          <Chip label={library?.network?.name} sx={styles.chip} /> on Goerli and
+          will have to confirm a transaction with your currently connected
+          wallet. The creation will cost approximately &gt; 0.001 GOR. The exact
+          amount will be determined by your wallet.
         </Typography>
       </Box>
     </Paper>

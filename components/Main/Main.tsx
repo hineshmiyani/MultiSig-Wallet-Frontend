@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 const Main = () => {
   const router = useRouter();
-  const { account, isLoading } = useEthers();
+  const { account } = useEthers();
   useEffect(() => {
     if (!account) {
       router.push({

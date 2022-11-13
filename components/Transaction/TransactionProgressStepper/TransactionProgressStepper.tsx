@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useContractFunction, useEthers } from "@usedapp/core";
 import { styled } from "@mui/material/styles";
+import toast from "react-hot-toast";
 import {
   Stack,
   Stepper,
@@ -18,7 +19,7 @@ import { Check, CircleOutlined } from "@mui/icons-material";
 import { AccountAvatar } from "../../index";
 import { useIsTxConfirmed } from "../../../hooks";
 import { contract } from "../../../constants";
-import toast from "react-hot-toast";
+import { styles } from "./styles";
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
@@ -58,10 +59,6 @@ const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
     },
     "& .QontoStepIcon-circle": {
       fontSize: "16px",
-      // width: 16,
-      // height: 16,
-      // borderRadius: "50%",
-      // backgroundColor: "currentColor",
     },
   })
 );
@@ -85,6 +82,7 @@ type Props = {
   confirmationsRequired: number;
   txIndex: number;
 };
+
 const TransactionProgressStepper: React.FC<Props> = ({
   transaction,
   confirmationsRequired,
@@ -283,7 +281,7 @@ const TransactionProgressStepper: React.FC<Props> = ({
     "Executed",
   ];
   return (
-    <Stack sx={{ width: "100%" }}>
+    <Stack width="100%">
       <Stepper
         orientation="vertical"
         activeStep={activeStep}
@@ -291,21 +289,7 @@ const TransactionProgressStepper: React.FC<Props> = ({
       >
         {steps.map((label, index) => (
           <Step key={index}>
-            <StepLabel
-              sx={{
-                py: "4px",
-                "& .MuiStepLabel-label.Mui-active, .MuiStepLabel-label.Mui-completed":
-                  {
-                    color: "primary.buttonColor",
-                    fontWeight: "600",
-                  },
-                "& .MuiStepLabel-label.Mui-active > *, .MuiStepLabel-label.Mui-completed > *":
-                  {
-                    fontWeight: "600",
-                  },
-              }}
-              StepIconComponent={QontoStepIcon}
-            >
+            <StepLabel sx={styles.stepLabel} StepIconComponent={QontoStepIcon}>
               {label}
             </StepLabel>
           </Step>
@@ -313,31 +297,12 @@ const TransactionProgressStepper: React.FC<Props> = ({
       </Stepper>
 
       {transaction?.executed === false && (
-        <Box
-          sx={{
-            my: 2,
-            width: "90%",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            gap: 1.5,
-          }}
-        >
+        <Box sx={styles.buttonContainer}>
           {parseInt(transaction?.numConfirmations) >= confirmationsRequired ? (
             <Button
               variant="contained"
               color="primary"
-              sx={{
-                backgroundColor: "primary.buttonColor",
-                color: "primary.contrastText",
-                px: "12px",
-                width: "100px",
-                transition: "all .2s ease-in-out",
-                "&:hover": {
-                  backgroundColor: "primary.buttonColor",
-                  transform: "scale(1.1)",
-                },
-              }}
+              sx={styles.actionsButton}
               disabled={disabledBtn}
               onClick={() => executeTransaction()}
             >
@@ -347,17 +312,7 @@ const TransactionProgressStepper: React.FC<Props> = ({
             <Button
               variant="contained"
               color="primary"
-              sx={{
-                backgroundColor: "primary.buttonColor",
-                color: "primary.contrastText",
-                px: "12px",
-                width: "100px",
-                transition: "all .2s ease-in-out",
-                "&:hover": {
-                  backgroundColor: "primary.buttonColor",
-                  transform: "scale(1.1)",
-                },
-              }}
+              sx={styles.actionsButton}
               disabled={isTxConfirmed?.[0] || disabledBtn}
               onClick={() => confirmTransaction()}
             >
@@ -368,17 +323,7 @@ const TransactionProgressStepper: React.FC<Props> = ({
           <Button
             variant="outlined"
             disabled={disabledBtn}
-            sx={{
-              color: "primary.buttonColor",
-              borderColor: "primary.buttonColor",
-              px: "12px",
-              width: "100px",
-              transition: " all .2s ease-in-out",
-              "&:hover": {
-                borderColor: "primary.buttonColor",
-                transform: "scale(1.1)",
-              },
-            }}
+            sx={styles.rejectButton}
             onClick={() => rejectConfirmation()}
           >
             Reject

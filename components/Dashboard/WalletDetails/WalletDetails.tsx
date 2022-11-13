@@ -15,9 +15,9 @@ import {
 } from "@mui/material";
 import MakeTransectionDialog from "../../Sidebar/MakeTransactionDialog/MakeTransactionDialog";
 import { useGetWalletName } from "../../../hooks";
+import { styles } from "./styles";
 
-type Props = {};
-const WalletDetails: React.FC<Props> = () => {
+const WalletDetails = () => {
   const router = useRouter();
   const { walletAddress }: any = router?.query;
   const { id: walletId } = router?.query;
@@ -31,33 +31,12 @@ const WalletDetails: React.FC<Props> = () => {
 
   return (
     <>
-      <Typography
-        variant="h5"
-        sx={{
-          fontWeight: "bold",
-          my: "24px",
-        }}
-      >
+      <Typography variant="h5" fontWeight="bold" my="24px">
         Dashboard
       </Typography>
-      <Paper
-        elevation={0}
-        sx={{
-          display: "flex",
-          maxWidth: "100%",
-          borderRadius: "8px",
-          boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-        }}
-      >
-        <Card
-          sx={{
-            maxWidth: "100%",
-            flexBasis: "100%",
-            borderRadius: "8px",
-            boxShadow: "0",
-          }}
-        >
-          <CardContent sx={{ p: "24px 24px 0", position: "relative" }}>
+      <Paper elevation={0} sx={styles.container}>
+        <Card sx={styles.cardContainer}>
+          <CardContent sx={styles.cardContent}>
             <Image
               src="/asset/images/walletAvatar.png"
               width="48"
@@ -65,7 +44,7 @@ const WalletDetails: React.FC<Props> = () => {
               alt=""
               className="rounded-full object-cover"
             />
-            <Typography variant="body1" fontWeight="bold" mt={2} gutterBottom>
+            <Typography variant="body1" fontWeight="bold" mt={1.5} gutterBottom>
               {walletName}
             </Typography>{" "}
             <Typography variant="body1">
@@ -75,51 +54,24 @@ const WalletDetails: React.FC<Props> = () => {
               </Typography>{" "}
               {walletAddress}
             </Typography>
-            <Chip
-              label={library?.network?.name}
-              sx={{
-                backgroundColor: "warning.light",
-                fontWeight: "500",
-                color: "white",
-                position: "absolute",
-                right: "24px",
-                top: "24px",
-              }}
-            />
+            <Chip label={library?.network?.name} sx={styles.chip} />
             <Stack alignItems="center" direction="row" mt={1.5}>
               <Box>
                 <Typography
                   variant="body1"
-                  sx={{
-                    color: "primary.main",
-                    fontSize: "14px",
-                  }}
+                  color="primary.main"
+                  fontSize="14px"
                 >
                   Total Balance
                 </Typography>
-                <Typography variant="h6" sx={{ color: "primary.main" }}>
+                <Typography variant="h6" color="primary.main">
                   {etherBalance ? formatEther(etherBalance) : 0.0} ETH
                 </Typography>
               </Box>
 
               <Box ml="auto">
                 <MakeTransectionDialog walletAddress={walletAddress}>
-                  <Button
-                    sx={{
-                      backgroundColor: "primary.buttonColor",
-                      border: "1px solid",
-                      borderColor: "primary.buttonColor",
-                      color: "primary.contrastText",
-                      p: "8px 12px",
-                      transition: " all .2s ease-in-out",
-                      "&:hover": {
-                        backgroundColor: "primary.buttonColor",
-                        transform: "scale(1.05)",
-                      },
-                    }}
-                  >
-                    New Transaction
-                  </Button>
+                  <Button sx={styles.transactionButton}>New Transaction</Button>
                 </MakeTransectionDialog>
               </Box>
             </Stack>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import {
@@ -14,6 +13,7 @@ import { useGetOwners } from "../../../hooks";
 import { ContentCopyRounded } from "@mui/icons-material";
 import { ShareIcon } from "../../index";
 import { useRouter } from "next/router";
+import { styles } from "./styles";
 
 const AddressCell = (params: GridRenderCellParams) => {
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
@@ -21,7 +21,7 @@ const AddressCell = (params: GridRenderCellParams) => {
 
   return (
     <Stack py={1} px={3} spacing={1} direction="row" alignItems="center">
-      <Typography variant="caption" component="p" sx={{ width: "340px" }}>
+      <Typography variant="caption" component="p" width="340px">
         <Typography variant="caption" fontWeight="bold">
           {library?.network?.name?.substring(0, 2)}
           {library?.network?.name?.substring(3, 4)}:
@@ -31,7 +31,7 @@ const AddressCell = (params: GridRenderCellParams) => {
       <Tooltip title={tooltipTitle} placement="top">
         <IconButton
           size="medium"
-          sx={{ backgroundColor: "secondary.contrastText" }}
+          sx={styles.iconButton}
           onClick={() => {
             params?.value && navigator.clipboard.writeText(params?.value);
             setTooltipTitle("Copied");
@@ -40,15 +40,13 @@ const AddressCell = (params: GridRenderCellParams) => {
             }, 1200);
           }}
         >
-          <ContentCopyRounded
-            sx={{ color: "disabled.main", fontSize: "20px" }}
-          />
+          <ContentCopyRounded sx={styles.copyIcon} />
         </IconButton>
       </Tooltip>
       <Tooltip title="View on goerli.etherscan.io" placement="top">
         <IconButton
           size="small"
-          sx={{ backgroundColor: "secondary.contrastText" }}
+          sx={styles.iconButton}
           onClick={() => {
             window.open(
               `https://${library?.network?.name}.etherscan.io/address/${params?.value}`,
@@ -63,13 +61,12 @@ const AddressCell = (params: GridRenderCellParams) => {
   );
 };
 
-type Props = {};
-const WalletOwners: React.FC<Props> = () => {
+const WalletOwners = () => {
   const router = useRouter();
   const { id: walletId } = router?.query;
   const [rows, setRows] = useState<any[]>([{ id: 1, avatar: "", address: "" }]);
 
-  const { account, library } = useEthers();
+  const { account } = useEthers();
   const ownersList = useGetOwners([account?.toString(), walletId]);
 
   const columns: GridColDef[] = [
@@ -87,6 +84,7 @@ const WalletOwners: React.FC<Props> = () => {
       align: "center",
       headerAlign: "center",
       renderCell: (params: GridRenderCellParams) => (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={params.value}
           width="34"
@@ -108,7 +106,6 @@ const WalletOwners: React.FC<Props> = () => {
   ];
 
   useEffect(() => {
-    // console.log(ownersList);
     setRows(() => {
       const modifyOwnerList =
         ownersList?.length > 0 &&
@@ -127,26 +124,11 @@ const WalletOwners: React.FC<Props> = () => {
 
   return (
     <>
-      <Typography
-        variant="h6"
-        sx={{
-          fontWeight: "700",
-          mt: "24px",
-        }}
-        gutterBottom
-      >
+      <Typography variant="h6" fontWeight="700" mt="24px" gutterBottom>
         Owners
       </Typography>
-      <Paper
-        elevation={0}
-        sx={{
-          display: "flex",
-          maxWidth: "100%",
-          borderRadius: "8px",
-          boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-        }}
-      >
-        <Box sx={{ height: 271, width: "100%", p: 0.4 }}>
+      <Paper elevation={0} sx={styles.container}>
+        <Box sx={styles.datagridContainer}>
           <DataGrid
             rows={rows}
             columns={columns}

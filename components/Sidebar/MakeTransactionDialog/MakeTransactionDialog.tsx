@@ -28,6 +28,7 @@ import {
 } from "@mui/icons-material";
 import { contract } from "../../../constants";
 import { ShareIcon } from "../../index";
+import { styles } from "./styles";
 
 const CustomDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogActions-root": {
@@ -45,18 +46,13 @@ const CustomDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, py: 2, px: 3 }} {...other}>
+    <DialogTitle sx={styles.dialogTitle} {...other}>
       {children}
       {onClose ? (
         <IconButton
           aria-label="close"
           onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
+          sx={styles.closeButton}
         >
           <Close />
         </IconButton>
@@ -75,6 +71,7 @@ type Props = {
   children?: JSX.Element;
   walletAddress: string;
 };
+
 const MakeTransactionDialog: React.FC<Props> = ({
   children,
   walletAddress,
@@ -244,53 +241,21 @@ const MakeTransactionDialog: React.FC<Props> = ({
           {showDialogStep === DialogStep.DEPOSIT_FUNDS && "Deposit funds"}
           {showDialogStep === DialogStep.SEND_FUNDS && "Send funds"}
         </CustomDialogTitle>
-        <DialogContent
-          dividers
-          sx={{
-            p: "16px 24px",
-            textAlign: "center",
-            width: "620px",
-          }}
-        >
+
+        <DialogContent dividers sx={styles.dialogContent}>
           {/* DialogStep -> CHOOSE_TRANSACTION */}
           {showDialogStep === DialogStep.CHOOSE_TRANSACTION && (
             <Stack alignItems="center" m="30px" spacing={4}>
               <Button
                 startIcon={<TollRounded sx={{ fontSize: "24px !important" }} />}
-                sx={{
-                  backgroundColor: "primary.buttonColor",
-                  border: "1px solid",
-                  borderColor: "primary.buttonColor",
-                  color: "primary.contrastText",
-                  p: "10px 40px",
-                  width: "240px",
-                  transition: " all .2s ease-in-out",
-                  fontSize: "18px",
-                  "&:hover": {
-                    backgroundColor: "primary.buttonColor",
-                    transform: "scale(1.05)",
-                  },
-                }}
+                sx={styles.button}
                 onClick={() => setShowDialogStep(DialogStep.DEPOSIT_FUNDS)}
               >
                 Deposit Funds
               </Button>
               <Button
                 startIcon={<CallMade sx={{ fontSize: "24px !important" }} />}
-                sx={{
-                  backgroundColor: "primary.buttonColor",
-                  border: "1px solid",
-                  borderColor: "primary.buttonColor",
-                  color: "primary.contrastText",
-                  p: "10px 40px",
-                  width: "240px",
-                  transition: " all .2s ease-in-out",
-                  fontSize: "18px",
-                  "&:hover": {
-                    backgroundColor: "primary.buttonColor",
-                    transform: "scale(1.05)",
-                  },
-                }}
+                sx={styles.button}
                 onClick={() => setShowDialogStep(DialogStep.SEND_FUNDS)}
               >
                 Send Funds
@@ -301,11 +266,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
           {/* DialogStep -> DEPOSIT_FUNDS */}
           {showDialogStep === DialogStep.DEPOSIT_FUNDS && (
             <Box textAlign="left">
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                sx={{ fontWeight: "500" }}
-              >
+              <Typography variant="subtitle1" gutterBottom fontWeight="500">
                 Sending from
               </Typography>
 
@@ -329,7 +290,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
                   <Tooltip title={tooltipTitle} placement="top">
                     <IconButton
                       size="medium"
-                      sx={{ backgroundColor: "secondary.contrastText" }}
+                      sx={styles.iconButton}
                       onClick={() => {
                         account && navigator.clipboard.writeText(account);
                         setTooltipTitle("Copied");
@@ -338,15 +299,13 @@ const MakeTransactionDialog: React.FC<Props> = ({
                         }, 1200);
                       }}
                     >
-                      <ContentCopyRounded
-                        sx={{ color: "disabled.main", fontSize: "20px" }}
-                      />
+                      <ContentCopyRounded sx={styles.copyIcon} />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="View on goerli.etherscan.io" placement="top">
                     <IconButton
                       size="small"
-                      sx={{ backgroundColor: "secondary.contrastText" }}
+                      sx={styles.iconButton}
                       onClick={() => {
                         window.open(
                           `https://${library?.network?.name}.etherscan.io/address/${account}`,
@@ -360,17 +319,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
                 </Stack>
               </Stack>
 
-              <Box
-                sx={{
-                  backgroundColor: "secondary.contrastText",
-                  m: "2px 0 0 44px",
-                  p: "5px 10px",
-                  width: "max-content",
-                  textAlign: "center",
-                  borderRadius: "5px",
-                  boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-                }}
-              >
+              <Box sx={styles.balanceContainer}>
                 <Typography variant="body2">
                   Balance :{" "}
                   <Typography variant="body2" component="span" fontWeight="600">
@@ -383,7 +332,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
                 </Typography>
               </Box>
 
-              <Divider sx={{ mt: "24px", mb: "20px" }} />
+              <Divider sx={styles.divider} />
 
               <Box>
                 <Typography variant="body2" component="p" my={1}>
@@ -412,11 +361,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
           {/* DialogStep -> SEND_FUNDS  */}
           {showDialogStep === DialogStep.SEND_FUNDS && (
             <Box textAlign="left">
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                sx={{ fontWeight: "500" }}
-              >
+              <Typography variant="subtitle1" gutterBottom fontWeight="500">
                 Sending from
               </Typography>
 
@@ -440,7 +385,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
                   <Tooltip title={tooltipTitle} placement="top">
                     <IconButton
                       size="medium"
-                      sx={{ backgroundColor: "secondary.contrastText" }}
+                      sx={styles.iconButton}
                       onClick={() => {
                         account && navigator.clipboard.writeText(account);
                         setTooltipTitle("Copied");
@@ -449,15 +394,13 @@ const MakeTransactionDialog: React.FC<Props> = ({
                         }, 1200);
                       }}
                     >
-                      <ContentCopyRounded
-                        sx={{ color: "disabled.main", fontSize: "20px" }}
-                      />
+                      <ContentCopyRounded sx={styles.copyIcon} />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="View on goerli.etherscan.io" placement="top">
                     <IconButton
                       size="small"
-                      sx={{ backgroundColor: "secondary.contrastText" }}
+                      sx={styles.iconButton}
                       onClick={() => {
                         window.open(
                           `https://${library?.network?.name}.etherscan.io/address/${account}`,
@@ -471,17 +414,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
                 </Stack>
               </Stack>
 
-              <Box
-                sx={{
-                  backgroundColor: "secondary.contrastText",
-                  m: "2px 0 0 44px",
-                  p: "5px 10px",
-                  width: "max-content",
-                  textAlign: "center",
-                  borderRadius: "5px",
-                  boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-                }}
-              >
+              <Box sx={styles.balanceContainer}>
                 <Typography variant="body2">
                   Balance :{" "}
                   <Typography variant="body2" component="span" fontWeight="600">
@@ -494,7 +427,7 @@ const MakeTransactionDialog: React.FC<Props> = ({
                 </Typography>
               </Box>
 
-              <Divider sx={{ mt: "24px", mb: "20px" }} />
+              <Divider sx={styles.divider} />
 
               <Box>
                 <Typography variant="body2" component="p" my={1}>
@@ -540,36 +473,14 @@ const MakeTransactionDialog: React.FC<Props> = ({
 
         {/* DialogStep -> DEPOSIT_FUNDS */}
         {showDialogStep === DialogStep.DEPOSIT_FUNDS && (
-          <DialogActions sx={{ justifyContent: "center", gap: 2 }}>
+          <DialogActions sx={styles.dialogActions}>
             <>
-              <Button
-                sx={{
-                  p: "8px 24px",
-                  transition: " all .2s ease-in-out",
-                  color: "primary.buttonColor",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                  },
-                }}
-                onClick={handleClose}
-              >
+              <Button sx={styles.cancelButton} onClick={handleClose}>
                 Cancel
               </Button>
               <Button
                 onClick={() => depositEther()}
-                sx={{
-                  backgroundColor: "primary.buttonColor",
-                  color: "primary.contrastText",
-                  transition: " all .2s ease-in-out",
-                  p: "8px 24px",
-                  "&:hover": {
-                    backgroundColor: "primary.buttonColor",
-                    transform: "scale(1.05)",
-                  },
-                  "&:disabled": {
-                    backgroundColor: "grey.300",
-                  },
-                }}
+                sx={styles.submitButton}
                 disabled={depositAmount === 0 || disabledBtn}
               >
                 Submit
@@ -580,36 +491,14 @@ const MakeTransactionDialog: React.FC<Props> = ({
 
         {/* DialogStep -> SEND_FUNDS  */}
         {showDialogStep === DialogStep.SEND_FUNDS && (
-          <DialogActions sx={{ justifyContent: "center", gap: 2 }}>
+          <DialogActions sx={styles.dialogActions}>
             <>
-              <Button
-                sx={{
-                  p: "8px 24px",
-                  transition: " all .2s ease-in-out",
-                  color: "primary.buttonColor",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                  },
-                }}
-                onClick={handleClose}
-              >
+              <Button sx={styles.cancelButton} onClick={handleClose}>
                 Cancel
               </Button>
               <Button
                 onClick={() => sendEther()}
-                sx={{
-                  backgroundColor: "primary.buttonColor",
-                  color: "primary.contrastText",
-                  transition: " all .2s ease-in-out",
-                  p: "8px 24px",
-                  "&:hover": {
-                    backgroundColor: "primary.buttonColor",
-                    transform: "scale(1.05)",
-                  },
-                  "&:disabled": {
-                    backgroundColor: "grey.300",
-                  },
-                }}
+                sx={styles.submitButton}
                 disabled={!recipientAddress || sendAmount === 0 || disabledBtn}
               >
                 Submit

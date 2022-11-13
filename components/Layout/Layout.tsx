@@ -1,21 +1,23 @@
-import React, { useEffect } from "react";
 import Head from "next/head";
-import { Header } from "../index";
-import { Container } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
-import Sidebar from "../Sidebar/Sidebar/Sidebar";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useEthers } from "@usedapp/core";
+import { Container } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
+import { Header } from "../index";
+import Sidebar from "../Sidebar/Sidebar/Sidebar";
 import { useGetWallets, useGetWalletsCount, useIsOwner } from "../../hooks";
-interface Props {
+import { styles } from "./styles";
+
+type Props = {
   children: JSX.Element;
-}
+};
 
 const Layout: React.FC<Props> = ({ children }) => {
   const router = useRouter();
   const { walletAddress, id: walletId } = router.query;
 
-  const { account, isLoading } = useEthers();
+  const { account } = useEthers();
   const totalWallet = useGetWalletsCount([account?.toString()]);
   const walletList = useGetWallets(
     [account?.toString()],
@@ -56,6 +58,7 @@ const Layout: React.FC<Props> = ({ children }) => {
     }
   }, [account, isOwner?.[0]]);
 
+  // Render login page
   if (router?.route?.includes("login")) {
     return (
       <>
@@ -71,6 +74,7 @@ const Layout: React.FC<Props> = ({ children }) => {
     );
   }
 
+  // Render other pages except login page
   return (
     <>
       <Head>
@@ -85,15 +89,7 @@ const Layout: React.FC<Props> = ({ children }) => {
       <Header />
 
       {/* Main */}
-      <Container
-        maxWidth={false}
-        sx={{
-          minHeight: "100vh",
-          backgroundColor: "secondary.contrastText",
-          pt: "66px",
-          px: "0 !important",
-        }}
-      >
+      <Container maxWidth={false} sx={styles.container}>
         <Grid container>
           {/* Sidebar */}
           <Grid xs={2}>

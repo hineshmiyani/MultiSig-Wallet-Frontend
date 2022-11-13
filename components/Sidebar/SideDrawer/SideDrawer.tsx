@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { AddCircleOutlined } from "@mui/icons-material";
 import {
   Box,
@@ -14,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import Wallet from "../Wallet/Wallet";
-import { useRouter } from "next/router";
+import { styles } from "./styles";
 
 type Props = {
   walletList: string[];
@@ -42,7 +43,7 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: 350 }}
+      width="350px"
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -56,22 +57,13 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
           spacing={1.2}
         >
           <IconButton
-            sx={{
-              color: "primary.buttonColor",
-              transition: " all .2s ease-in-out",
-              "&:hover": {
-                transform: "scale(1.1)",
-              },
-            }}
+            sx={styles.addButton}
             size="small"
             onClick={() => router.push("/welcome")}
           >
-            <AddCircleOutlined sx={{ fontSize: "46px" }} />
+            <AddCircleOutlined sx={styles.addIcon} />
           </IconButton>
-          <Typography
-            variant="h6"
-            sx={{ color: "primary.main", fontSize: "18px", fontWeight: "700" }}
-          >
+          <Typography variant="h6" sx={styles.addWalletText}>
             Add Wallet
           </Typography>
         </Stack>
@@ -79,24 +71,14 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
       <Divider />
       <List sx={{ p: 0 }}>
         <ListItem disablePadding>
-          <ListItemButton
-            sx={{
-              backgroundColor: "grey.200",
-              py: 0.2,
-              px: 4,
-            }}
-          >
+          <ListItemButton sx={styles.listButton}>
             <ListItemText
               primary={
                 <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                  <Typography variant="body1" fontWeight="600">
                     Total Wallet :
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    component="span"
-                    sx={{ fontWeight: 600 }}
-                  >
+                  <Typography variant="body1" component="span" fontWeight="600">
                     {walletList.length}
                   </Typography>{" "}
                 </Stack>
@@ -113,11 +95,7 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
         {walletList.length === 0 && (
           <ListItem disablePadding>
             <ListItemText
-              sx={{
-                py: "10px",
-                px: 4,
-                textAlign: "center",
-              }}
+              sx={styles.listText}
               primary={
                 <>
                   <Typography variant="body1" gutterBottom>
@@ -140,19 +118,7 @@ const SideDrawer: React.FC<Props> = ({ walletList }) => {
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <Button
-            sx={{
-              backgroundColor: "primary.buttonColor",
-              border: "1px solid",
-              borderColor: "primary.buttonColor",
-              color: "primary.contrastText",
-              p: "8px 12px",
-              width: "145px",
-              transition: " all .2s ease-in-out",
-              "&:hover": {
-                backgroundColor: "primary.buttonColor",
-                transform: "scale(1.05)",
-              },
-            }}
+            sx={styles.actionsButton}
             onClick={toggleDrawer(anchor, true)}
           >
             Select Wallet

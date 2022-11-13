@@ -1,9 +1,10 @@
-import { ContentCopyRounded } from "@mui/icons-material";
-import { Stack, Typography, Tooltip, IconButton } from "@mui/material";
-import { useEthers } from "@usedapp/core";
-import Image from "next/image";
 import React, { useState } from "react";
+import Image from "next/image";
+import { useEthers } from "@usedapp/core";
+import { Stack, Typography, Tooltip, IconButton } from "@mui/material";
+import { ContentCopyRounded } from "@mui/icons-material";
 import { ShareIcon } from "../index";
+import { styles } from "./styles";
 
 type Props = {
   toAddress: "string";
@@ -45,7 +46,7 @@ const AccountAvatar: React.FC<Props> = ({ toAddress, truncate }) => {
       <Tooltip title={tooltipTitle} placement="top">
         <IconButton
           size="medium"
-          sx={{ backgroundColor: "secondary.contrastText" }}
+          sx={styles.iconButton}
           onClick={() => {
             toAddress && navigator.clipboard.writeText(toAddress);
             setTooltipTitle("Copied");
@@ -54,15 +55,13 @@ const AccountAvatar: React.FC<Props> = ({ toAddress, truncate }) => {
             }, 1200);
           }}
         >
-          <ContentCopyRounded
-            sx={{ color: "disabled.main", fontSize: "20px" }}
-          />
+          <ContentCopyRounded sx={styles.copyIcon} />
         </IconButton>
       </Tooltip>
       <Tooltip title="View on goerli.etherscan.io" placement="top">
         <IconButton
           size="small"
-          sx={{ backgroundColor: "secondary.contrastText" }}
+          sx={styles.iconButton}
           onClick={() => {
             window.open(
               `https://${library?.network?.name}.etherscan.io/address/${toAddress}`,

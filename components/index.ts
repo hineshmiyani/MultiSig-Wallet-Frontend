@@ -7,7 +7,6 @@ export { default as Header } from "./Header/Header";
 export { default as Layout } from "./Layout/Layout";
 export { default as Loader } from "./Loader/Loader";
 export { default as Main } from "./Main/Main";
-export { default as NavButton } from "./NavButton/NavButton";
 export { default as ShareIcon } from "./ShareIcon/ShareIcon";
 export { default as MakeTransactionDialog } from "./Sidebar/MakeTransactionDialog/MakeTransactionDialog";
 export { default as Sidebar } from "./Sidebar/Sidebar/Sidebar";

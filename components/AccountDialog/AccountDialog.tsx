@@ -7,9 +7,7 @@ import {
   Divider,
   IconButton,
   Menu,
-  MenuItem,
   Stack,
-  SvgIcon,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -19,6 +17,7 @@ import {
   AccountBalanceWalletOutlined,
 } from "@mui/icons-material";
 import { ShareIcon } from "../index";
+import { styles } from "./styles";
 
 const AccountDialog = () => {
   const { library, deactivate, account } = useEthers();
@@ -30,6 +29,7 @@ const AccountDialog = () => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -57,11 +57,7 @@ const AccountDialog = () => {
           "aria-labelledby": "basic-button",
         }}
         PaperProps={{
-          style: {
-            width: "280px",
-            marginTop: "20px",
-            marginLeft: "-20px",
-          },
+          style: styles.menuContainer,
         }}
       >
         <Stack py={1} px={2} spacing={1} alignItems="center">
@@ -72,16 +68,7 @@ const AccountDialog = () => {
             alt=""
             className="rounded-full object-cover"
           />
-          <Stack
-            direction="row"
-            spacing={0.5}
-            sx={{
-              backgroundColor: "secondary.contrastText",
-              borderRadius: "2px",
-              p: "5px",
-              alignItems: "center",
-            }}
-          >
+          <Stack direction="row" spacing={0.5} sx={styles.addressContainer}>
             <Typography variant="body1" className="text-xs truncate">
               <Typography variant="caption" fontWeight="bold">
                 {library?.network?.name?.substring(0, 2)}
@@ -102,9 +89,7 @@ const AccountDialog = () => {
                   }, 1200);
                 }}
               >
-                <ContentCopyRounded
-                  sx={{ color: "disabled.main", fontSize: "16px" }}
-                />
+                <ContentCopyRounded sx={styles.copyIcon} />
               </IconButton>
             </Tooltip>
 
@@ -134,10 +119,10 @@ const AccountDialog = () => {
           justifyContent="space-between"
         >
           <Typography variant="caption">Wallet</Typography>
-          <Box sx={{ display: "flex", gap: "5px" }}>
+          <Box display="flex" gap="5px">
             <AccountBalanceWalletOutlined
               fontSize="small"
-              sx={{ color: "disabled.main" }}
+              sx={styles.walletIcon}
             />
             <Typography variant="caption">
               {library?.connection?.url?.[0]?.toUpperCase() +
@@ -170,14 +155,7 @@ const AccountDialog = () => {
 
         <Box sx={{ m: "20px 20px 12px" }}>
           <Button
-            sx={{
-              backgroundColor: "primary.buttonColor",
-              color: "primary.contrastText",
-              width: "100%",
-              "&:hover": {
-                backgroundColor: "primary.buttonColor",
-              },
-            }}
+            sx={styles.disconnectButton}
             onClick={() => {
               handleClose();
               deactivate();

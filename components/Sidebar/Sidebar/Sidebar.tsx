@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { formatEther } from "@ethersproject/units";
 import { useEtherBalance, useEthers } from "@usedapp/core";
 import {
   Box,
@@ -12,20 +14,17 @@ import {
 } from "@mui/material";
 import { AddCircleOutlined, ContentCopyRounded } from "@mui/icons-material";
 import {
-  useGetOwners,
   useGetWalletName,
   useGetWallets,
   useGetWalletsCount,
 } from "../../../hooks";
 import { ShareIcon } from "../../index";
-import Image from "next/image";
-import { formatEther } from "@ethersproject/units";
+
 import MakeTransactionDialog from "../MakeTransactionDialog/MakeTransactionDialog";
 import SideDrawer from "../SideDrawer/SideDrawer";
+import { styles } from "./styles";
 
-type Props = {};
-
-const Sidebar = (props: Props) => {
+const Sidebar = () => {
   const router = useRouter();
   const { id: walletId }: any = router?.query;
   const { account, library } = useEthers();
@@ -40,31 +39,8 @@ const Sidebar = (props: Props) => {
 
   const etherBalance = useEtherBalance(walletList?.[+walletId]);
 
-  // useEffect(() => {
-  //   console.log({
-  //     walletList,
-  //   });
-  // }, []);
-
   return (
-    <Box
-      sx={{
-        height: "max(calc(100vh - 66px), 100%)",
-        backgroundColor: "primary.contrastText",
-        boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
-        position: "fixed",
-        width: "inherit",
-      }}
-    >
-      {/* <Box textAlign="center" p={3}>
-        <Image
-          src="/asset/images/lockWallet.svg"
-          height={45}
-          width={45}
-          className="rounded-full object-cover"
-          alt=""
-        />
-      </Box> */}
+    <Box sx={styles.container}>
       <Stack
         direction="row"
         alignItems="center"
@@ -73,22 +49,13 @@ const Sidebar = (props: Props) => {
         spacing={0.5}
       >
         <IconButton
-          sx={{
-            color: "primary.buttonColor",
-            transition: " all .2s ease-in-out",
-            "&:hover": {
-              transform: "scale(1.1)",
-            },
-          }}
+          sx={styles.addButton}
           size="small"
           onClick={() => router.push("/welcome")}
         >
           <AddCircleOutlined sx={{ fontSize: "36px" }} />
         </IconButton>
-        <Typography
-          variant="h6"
-          sx={{ color: "primary.main", fontWeight: "500", ml: 1 }}
-        >
+        <Typography variant="h6" sx={styles.addWalletText}>
           Add Wallet
         </Typography>
       </Stack>
@@ -129,7 +96,7 @@ const Sidebar = (props: Props) => {
                 <Tooltip title={tooltipTitle} placement="top">
                   <IconButton
                     size="medium"
-                    sx={{ backgroundColor: "secondary.contrastText" }}
+                    sx={styles.iconButton}
                     onClick={() => {
                       wallet && navigator.clipboard.writeText(wallet);
                       setTooltipTitle("Copied");
@@ -138,15 +105,13 @@ const Sidebar = (props: Props) => {
                       }, 1200);
                     }}
                   >
-                    <ContentCopyRounded
-                      sx={{ color: "disabled.main", fontSize: "20px" }}
-                    />
+                    <ContentCopyRounded sx={styles.copyIcon} />
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="View on goerli.etherscan.io" placement="top">
                   <IconButton
                     size="small"
-                    sx={{ backgroundColor: "secondary.contrastText" }}
+                    sx={styles.iconButton}
                     onClick={() => {
                       window.open(
                         `https://${library?.network?.name}.etherscan.io/address/${wallet}`,
@@ -159,53 +124,22 @@ const Sidebar = (props: Props) => {
                 </Tooltip>
               </Stack>
               <Stack alignItems="center">
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "primary.main",
-                    fontSize: "14px",
-                    fontWeight: "500",
-                  }}
-                >
+                <Typography variant="body1" sx={styles.balanceText}>
                   Total Balance
                 </Typography>
-                <Typography variant="h6" sx={{ color: "primary.main" }}>
+                <Typography variant="h6" color="primary.main">
                   {etherBalance ? formatEther(etherBalance) : 0.0} ETH
                 </Typography>
               </Stack>
+
+              {/* New Transaction */}
               <MakeTransactionDialog walletAddress={wallet}>
-                <Button
-                  sx={{
-                    backgroundColor: "primary.buttonColor",
-                    border: "1px solid",
-                    borderColor: "primary.buttonColor",
-                    color: "primary.contrastText",
-                    p: "8px 12px",
-                    transition: " all .2s ease-in-out",
-                    "&:hover": {
-                      backgroundColor: "primary.buttonColor",
-                      transform: "scale(1.05)",
-                    },
-                  }}
-                >
-                  New Transaction
-                </Button>
+                <Button sx={styles.actionsButton}>New Transaction</Button>
               </MakeTransactionDialog>
+
               {/* Dashboard */}
               <Button
-                sx={{
-                  backgroundColor: "primary.buttonColor",
-                  border: "1px solid",
-                  borderColor: "primary.buttonColor",
-                  color: "primary.contrastText",
-                  p: "8px 12px",
-                  width: "145px",
-                  transition: " all .2s ease-in-out",
-                  "&:hover": {
-                    backgroundColor: "primary.buttonColor",
-                    transform: "scale(1.05)",
-                  },
-                }}
+                sx={styles.actionsButton}
                 onClick={() =>
                   router.push({
                     pathname: `/dashboard/${wallet}`,
@@ -215,21 +149,10 @@ const Sidebar = (props: Props) => {
               >
                 Dashboard
               </Button>
+
               {/* Transactions */}
               <Button
-                sx={{
-                  backgroundColor: "primary.buttonColor",
-                  border: "1px solid",
-                  borderColor: "primary.buttonColor",
-                  color: "primary.contrastText",
-                  p: "8px 12px",
-                  width: "145px",
-                  transition: " all .2s ease-in-out",
-                  "&:hover": {
-                    backgroundColor: "primary.buttonColor",
-                    transform: "scale(1.05)",
-                  },
-                }}
+                sx={styles.actionsButton}
                 onClick={() =>
                   router.push({
                     pathname: `/dashboard/${wallet}/transactions`,

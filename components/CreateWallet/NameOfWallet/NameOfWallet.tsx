@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Paper, Typography, Chip, TextField, Box } from "@mui/material";
 import { useEthers } from "@usedapp/core";
+import { Paper, Typography, Chip, TextField, Box } from "@mui/material";
+import { styles } from "./styles";
 
 const NameOfWallet = () => {
   const { library } = useEthers();
@@ -15,13 +16,7 @@ const NameOfWallet = () => {
   }, [walletName]);
 
   return (
-    <Paper
-      sx={{
-        p: "24px",
-        my: "30px",
-        boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-      }}
-    >
+    <Paper sx={styles.container}>
       <Box>
         <Typography variant="subtitle1" component="span" gutterBottom>
           You are about to create a new wallet with one or more owners. First,
@@ -29,14 +24,7 @@ const NameOfWallet = () => {
           the blockchain and will never be shared with us or any third parties.
           The new Wallet will ONLY be available on{" "}
         </Typography>
-        <Chip
-          label={library?.network?.name}
-          sx={{
-            backgroundColor: "warning.light",
-            fontWeight: "500",
-            color: "white",
-          }}
-        />
+        <Chip label={library?.network?.name} sx={styles.chip} />
       </Box>
 
       <Box>

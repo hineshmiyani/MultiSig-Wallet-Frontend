@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useEthers } from "@usedapp/core";
 import {
   Paper,
   Box,
@@ -9,15 +10,13 @@ import {
   Stack,
   Button,
   IconButton,
-  FormControl,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Tooltip,
 } from "@mui/material";
-import { useEthers } from "@usedapp/core";
 import { Add, DeleteOutline } from "@mui/icons-material";
+import { styles } from "./styles";
 
 const AddOwners = () => {
   const { library, account } = useEthers();
@@ -55,7 +54,6 @@ const AddOwners = () => {
   };
 
   useEffect(() => {
-    // console.log({ ownersList, requiredConfirmations, ownerCount });
     const newOwnersList = ownersList.filter((val) => val !== "");
     return () => {
       sessionStorage.setItem(
@@ -77,13 +75,7 @@ const AddOwners = () => {
   };
 
   return (
-    <Paper
-      sx={{
-        py: "24px",
-        my: "30px",
-        boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-      }}
-    >
+    <Paper sx={styles.container}>
       <Box px={3}>
         <Typography variant="subtitle1" mb={2}>
           Your Wallet will have one or more owners. We have prefilled the first
@@ -100,14 +92,7 @@ const AddOwners = () => {
           <Typography variant="subtitle1" component="span">
             The new Safe will ONLY be available on{" "}
           </Typography>
-          <Chip
-            label={library?.network?.name}
-            sx={{
-              backgroundColor: "warning.light",
-              fontWeight: "500",
-              color: "white",
-            }}
-          />
+          <Chip label={library?.network?.name} sx={styles.chip} />
         </Box>
       </Box>
 
@@ -143,11 +128,7 @@ const AddOwners = () => {
                 color="error"
                 variant="outlined"
                 required
-                sx={{
-                  maxWidth: "59%",
-                  flexBasis: "59%",
-                  ml: 2.5,
-                }}
+                sx={styles.addressInput}
                 placeholder="Owner Address*"
                 InputLabelProps={{ shrink: true }}
                 value={ownersList[index]}
@@ -176,11 +157,7 @@ const AddOwners = () => {
           ))}
         <Button
           variant="text"
-          sx={{
-            color: "primary.buttonColor",
-            p: "8px 12px",
-            m: "10px auto",
-          }}
+          sx={styles.addOwnerButton}
           startIcon={<Add />}
           onClick={() => setOwnerCount((prevOwnerCount) => prevOwnerCount + 1)}
         >
@@ -211,8 +188,6 @@ const AddOwners = () => {
           out of {ownersList.filter((val) => val !== "").length} owner(s)
         </Typography>
       </Box>
-
-      {/* <pre>{JSON.stringify(ownersData)}</pre> */}
     </Paper>
   );
 };

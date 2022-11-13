@@ -10,11 +10,11 @@ import {
   StepConnector,
 } from "@mui/material";
 import { useContractFunction, useEthers } from "@usedapp/core";
-import { AddOwners, ConnectWallet, NameOfWallet, Review } from "../index";
-import { customStepperConnector, customStepperStyles } from "../../../theme";
-import { contract } from "../../../constants";
 import toast from "react-hot-toast";
+import { AddOwners, ConnectWallet, NameOfWallet, Review } from "../index";
+import { contract } from "../../../constants";
 import { useGetWallets, useGetWalletsCount } from "../../../hooks";
+import { styles } from "./styles";
 
 const steps = ["Connect Wallet", "Name", "Owners and Confirmations", "Review"];
 const getStepDescription = (step: number) => {
@@ -48,8 +48,6 @@ const CreateWallet = () => {
     parseInt(totalWallet)
   );
 
-  // console.log({ walletList, totalWallet: parseInt(totalWallet) });
-
   const createWallet = async () => {
     setDisabledBtn(true);
     const ownersData = sessionStorage.getItem("ownersData");
@@ -58,7 +56,6 @@ const CreateWallet = () => {
       JSON.parse(sessionStorage.getItem("walletName") || "");
     const { ownersList, requiredConfirmations } =
       ownersData && JSON.parse(ownersData || "");
-    // console.log({ ownersList, requiredConfirmations, walletName });
     send(ownersList, requiredConfirmations, walletName);
   };
 
@@ -135,17 +132,17 @@ const CreateWallet = () => {
   };
 
   return (
-    <Box sx={{ width: "80%", m: "20px auto" }}>
+    <Box sx={styles.container}>
       <Stepper
         activeStep={activeStep}
         alternativeLabel
-        connector={<StepConnector sx={customStepperConnector} />}
+        connector={<StepConnector sx={styles.customStepperConnector} />}
       >
         {steps.map((step, index) => (
           <Step
             key={step}
             completed={completed[index]}
-            sx={customStepperStyles}
+            sx={styles.customStepper}
           >
             <StepLabel>{step}</StepLabel>
           </Step>
@@ -155,60 +152,37 @@ const CreateWallet = () => {
       <Box>
         {allStepsCompleted ? (
           <>
-            <Typography sx={{ mt: 2, mb: 1 }}>All Steps Completed</Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Box sx={{ flex: "1 1 auto" }} />
+            <Typography mt={2} mb={1}>
+              All Steps Completed
+            </Typography>
+            <Box display="flex" flexDirection="row" pt={2}>
+              <Box flex="1 1 auto" />
               <Button variant="contained" onClick={handleReset}>
                 Reset
               </Button>
             </Box>
           </>
         ) : (
-          <Box
-            sx={{
-              width: "90%",
-              m: "auto",
-            }}
-          >
+          <Box width="90%" m="auto">
             {getStepDescription(activeStep)}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                pt: 2,
-                gap: 1,
-              }}
-            >
+            <Box sx={styles.buttonContainer}>
               <Button
                 onClick={handleBack}
                 variant="text"
                 disabled={activeStep === 0}
-                sx={{
-                  color: "primary.buttonColor",
-                  px: "12px",
-                  width: "100px",
-                }}
+                sx={styles.backButton}
               >
                 Back
               </Button>
               <Button
                 variant="contained"
                 color="primary"
-                sx={{
-                  backgroundColor: "primary.buttonColor",
-                  color: "primary.contrastText",
-                  px: "12px",
-                  width: "100px",
-                  "&:hover": {
-                    backgroundColor: "primary.buttonColor",
-                  },
-                }}
+                sx={styles.continueButton}
                 disabled={disabledBtn}
                 onClick={() => {
                   activeStep === totalSteps - 1 ? createWallet() : handleNext();
                 }}
               >
-                {/* {completedSteps === totalSteps - 1 ? "Create" : "Continue"} */}
                 {activeStep === totalSteps - 1 ? "Create" : "Continue"}
               </Button>
             </Box>

@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import Image from "next/image";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
-import NavButton from "../NavButton/NavButton";
-import { useEthers } from "@usedapp/core";
+import React from "react";
 import Link from "next/link";
-import { KeyboardArrowDown } from "@mui/icons-material";
+import Image from "next/image";
+import { useEthers } from "@usedapp/core";
+import { Box, Stack, Typography } from "@mui/material";
 import { AccountDialog } from "../index";
+import { styles } from "./styles";
 
 const Header = () => {
   const { library, account } = useEthers();
@@ -14,13 +13,7 @@ const Header = () => {
     <header className="header">
       {/* Logo Section  */}
       <Link href="/welcome">
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
+        <Box sx={styles.logoContainer}>
           <Image
             src="/asset/images/pakitLogo.png"
             height={34}
@@ -28,20 +21,17 @@ const Header = () => {
             className="object-cover"
             alt=""
           />
-          <Typography
-            variant="h6"
-            sx={{ color: "primary.main", fontWeight: "600", ml: 1 }}
-          >
+          <Typography variant="h6" sx={styles.name}>
             Pakit
           </Typography>
         </Box>
       </Link>
 
       {/* Account Section */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box sx={styles.accountContainer}>
         <Image src="/asset/images/metamask.svg" alt="" width={30} height={30} />
         <Stack>
-          <Typography variant="body2" sx={{ color: "primary.main" }}>
+          <Typography variant="body2" color="primary.main">
             MetaMask @
             {library?.network?.name?.substring(0, 1)?.toUpperCase() +
               "" +
@@ -68,26 +58,6 @@ const Header = () => {
 
         <AccountDialog />
       </Box>
-
-      {/* Logout  */}
-      {/* <Box
-        sx={{
-          display: { xs: "none", md: "flex" },
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: "6px",
-        }}
-      >
-        <Box
-          sx={{ backgroundColor: "#0A1F1C", p: "4px" }}
-          className="space-x-2"
-        >
-          <NavButton
-            title="Logout"
-            onClick={async () => await data.deactivate()}
-          />
-        </Box>
-      </Box> */}
     </header>
   );
 };

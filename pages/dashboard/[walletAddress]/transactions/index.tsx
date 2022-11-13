@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { formatEther } from "ethers/lib/utils";
@@ -8,13 +8,8 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Button,
-  Card,
-  CardContent,
-  Chip,
   Container,
   Divider,
-  Paper,
   Stack,
   Tab,
   Tabs,
@@ -31,6 +26,7 @@ import {
   TransactionProgressStepper,
   TxNotFound,
 } from "../../../../components";
+import { styles } from "./styles";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -61,13 +57,14 @@ const a11yProps = (index: number) => {
   };
 };
 
-type Props = {};
 const queueText = "Queued transactions will appear here";
 const completedText = "Completed transactions will appear here";
-const Transactions = (props: Props) => {
+
+const Transactions = () => {
   const router = useRouter();
   const { id: walletId } = router?.query;
   const [value, setValue] = useState(0);
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -82,63 +79,29 @@ const Transactions = (props: Props) => {
     account?.toString(),
     walletId ? +walletId : 0,
   ]);
+
   const transactionsList = useGetTransactions(
     [account?.toString(), walletId && +walletId],
     totalTransaction ? parseInt(totalTransaction) : 0
   );
 
-  useEffect(() => {
-    // console.log({ totalTransaction: parseInt(totalTransaction) });
-    // console.log({ transactionsList });
-  }, [totalTransaction, transactionsList]);
-
   return (
     <>
       <Container>
-        <Typography
-          variant="h5"
-          sx={{
-            fontWeight: "bold",
-            my: "24px",
-          }}
-        >
+        <Typography variant="h5" fontWeight="bold" my="24px">
           Transactions
         </Typography>
 
-        <Box sx={{ width: "100%" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box width="100%">
+          <Box borderBottom={1} borderColor="divider">
             <Tabs
               value={value}
               onChange={handleChange}
-              aria-label="basic tabs example"
-              sx={{
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "primary.buttonColor",
-                },
-              }}
+              aria-label="tabs"
+              sx={styles.tabsContainer}
             >
-              <Tab
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  "&.Mui-selected": {
-                    color: "primary.buttonColor",
-                  },
-                }}
-                label="Queue"
-                {...a11yProps(0)}
-              />
-              <Tab
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  "&.Mui-selected": {
-                    color: "primary.buttonColor",
-                  },
-                }}
-                label="Completed"
-                {...a11yProps(1)}
-              />
+              <Tab sx={styles.tab} label="Queue" {...a11yProps(0)} />
+              <Tab sx={styles.tab} label="Completed" {...a11yProps(1)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -150,22 +113,11 @@ const Transactions = (props: Props) => {
                     return (
                       <Accordion
                         key={transaction?.to + index}
-                        sx={{
-                          my: 1.5,
-                          borderRadius: "4px !important",
-                          "&::before": { height: 0 },
-                        }}
+                        sx={styles.accordionContainer}
                       >
                         <AccordionSummary
                           expandIcon={<ExpandMore />}
-                          sx={{
-                            "&.MuiAccordionSummary-root.Mui-expanded": {
-                              minHeight: "50px",
-                            },
-                            "& > .MuiAccordionSummary-content.Mui-expanded": {
-                              m: "12px 0",
-                            },
-                          }}
+                          sx={styles.accordionSummary}
                         >
                           <Stack
                             direction="row"
@@ -230,12 +182,7 @@ const Transactions = (props: Props) => {
 
                             <Typography
                               variant="body2"
-                              sx={{
-                                color: "primary.buttonColor",
-                                flexBasis: "20%",
-                                maxWidth: "20%",
-                                fontWeight: "600",
-                              }}
+                              sx={styles.confirmationText}
                             >
                               Needs Confirmation
                             </Typography>
@@ -250,7 +197,7 @@ const Transactions = (props: Props) => {
                                 <Typography
                                   variant="body1"
                                   component="span"
-                                  sx={{ fontWeight: "700" }}
+                                  fontWeight="700"
                                 >
                                   {formatEther(transaction?.value)}{" "}
                                 </Typography>
@@ -300,14 +247,7 @@ const Transactions = (props: Props) => {
                       >
                         <AccordionSummary
                           expandIcon={<ExpandMore />}
-                          sx={{
-                            "&.MuiAccordionSummary-root.Mui-expanded": {
-                              minHeight: "50px",
-                            },
-                            "& > .MuiAccordionSummary-content.Mui-expanded": {
-                              m: "12px 0",
-                            },
-                          }}
+                          sx={styles.accordionSummary}
                         >
                           <Stack
                             direction="row"
@@ -331,7 +271,7 @@ const Transactions = (props: Props) => {
                               flexBasis="20%"
                               maxWidth="20%"
                             >
-                              <CallMade sx={{ color: "primary.buttonColor" }} />
+                              <CallMade sx={{ color: "success.main" }} />
                               <Typography>Sent</Typography>
                             </Box>
 
@@ -370,12 +310,10 @@ const Transactions = (props: Props) => {
 
                             <Typography
                               variant="body2"
+                              textAlign="center"
                               sx={{
-                                color: "primary.buttonColor",
-                                flexBasis: "20%",
-                                maxWidth: "20%",
-                                textAlign: "center",
-                                fontWeight: "600",
+                                ...styles.confirmationText,
+                                color: "success.main",
                               }}
                             >
                               Success
@@ -391,7 +329,7 @@ const Transactions = (props: Props) => {
                                 <Typography
                                   variant="body1"
                                   component="span"
-                                  sx={{ fontWeight: "700" }}
+                                  fontWeight="700"
                                 >
                                   {formatEther(transaction?.value)}{" "}
                                 </Typography>

@@ -18,7 +18,7 @@ import {
   ContentCopyRounded,
   AccountBalanceWalletOutlined,
 } from "@mui/icons-material";
-import ShareIcon from "./ShareIcon";
+import { ShareIcon } from "../index";
 
 const AccountDialog = () => {
   const { library, deactivate, account } = useEthers();

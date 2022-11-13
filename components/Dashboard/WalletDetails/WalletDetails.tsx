@@ -13,8 +13,8 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import MakeTransectionDialog from "../Sidebar/MakeTransactionDialog";
-import { useGetWalletName } from "../../hooks";
+import MakeTransectionDialog from "../../Sidebar/MakeTransactionDialog/MakeTransactionDialog";
+import { useGetWalletName } from "../../../hooks";
 
 type Props = {};
 const WalletDetails: React.FC<Props> = () => {

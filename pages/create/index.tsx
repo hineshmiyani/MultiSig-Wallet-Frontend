@@ -1,12 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { Container, IconButton, Stack, Typography } from "@mui/material";
-import { ArrowBackIos, StayPrimaryLandscape } from "@mui/icons-material";
-import { CreateWallet } from "../components";
+import { ArrowBackIos } from "@mui/icons-material";
+import { CreateWallet } from "../../components";
+import { styles } from "./styles";
 
-type Props = {};
-
-const Create = (props: Props) => {
+const Create = () => {
   const router = useRouter();
   return (
     <Container maxWidth={false}>
@@ -16,13 +15,7 @@ const Create = (props: Props) => {
           sx={{ textAlign: "right" }}
           onClick={() => router.push("/welcome")}
         >
-          <ArrowBackIos
-            sx={{
-              position: "relative",
-              left: "4px",
-              color: "primary.buttonColor",
-            }}
-          />
+          <ArrowBackIos sx={styles.backIcon} />
         </IconButton>
         <Typography variant="h6">Create new Wallet</Typography>
       </Stack>

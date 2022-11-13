@@ -9,7 +9,7 @@ import {
 import { useEthers } from "@usedapp/core";
 import { useRouter } from "next/router";
 import React from "react";
-import { useGetWalletName } from "../../hooks";
+import { useGetWalletName } from "../../../hooks";
 
 type Props = {
   wallet: string;

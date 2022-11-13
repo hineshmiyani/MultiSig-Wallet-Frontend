@@ -3,7 +3,7 @@ import { Stack, Typography, Tooltip, IconButton } from "@mui/material";
 import { useEthers } from "@usedapp/core";
 import Image from "next/image";
 import React, { useState } from "react";
-import ShareIcon from "./ShareIcon";
+import { ShareIcon } from "../index";
 
 type Props = {
   toAddress: "string";

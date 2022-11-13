@@ -12,7 +12,7 @@ import {
   Stack,
   Tooltip,
 } from "@mui/material";
-import ShareIcon from "../ShareIcon";
+import { ShareIcon } from "../../index";
 
 const Review = () => {
   const { account, library } = useEthers();

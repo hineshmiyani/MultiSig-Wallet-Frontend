@@ -26,8 +26,8 @@ import {
   ContentCopyRounded,
   CallMade,
 } from "@mui/icons-material";
-import { contract } from "../../constants";
-import ShareIcon from "../ShareIcon";
+import { contract } from "../../../constants";
+import { ShareIcon } from "../../index";
 
 const CustomDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogActions-root": {

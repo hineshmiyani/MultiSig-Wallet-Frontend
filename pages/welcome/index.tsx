@@ -1,79 +1,37 @@
+import React from "react";
+import { useRouter } from "next/router";
 import {
   Button,
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Container,
-  Divider,
   Paper,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
-import { APP_NAME } from "../constants";
-import { Add, AccountBalanceWalletOutlined } from "@mui/icons-material";
-import { useRouter } from "next/router";
-import { useEthers } from "@usedapp/core";
-import { useGetWallets, useGetWalletsCount } from "../hooks";
+import { Add } from "@mui/icons-material";
+import { APP_NAME } from "../../constants";
+import { styles } from "./styles";
 
-type Props = {};
-
-const Welcome = (props: Props) => {
+const Welcome = () => {
   const router = useRouter();
-  const { status } = router?.query;
-
-  const { account } = useEthers();
-  const totalWallet = useGetWalletsCount([account?.toString()]);
-  const walletList = useGetWallets(
-    [account?.toString()],
-    parseInt(totalWallet)
-  );
 
   return (
     <>
       <Container maxWidth="lg">
-        <Typography
-          variant="h3"
-          sx={{
-            fontSize: "32px",
-            lineHeight: "36px",
-            fontWeight: "bold",
-            mt: "26px",
-          }}
-        >
+        <Typography variant="h3" sx={styles.title}>
           Welcome to the {APP_NAME}.
         </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            lineHeight: "26px",
-            fontWeight: "normal",
-            my: "18px",
-          }}
-        >
+        <Typography variant="h6" sx={styles.subtitle}>
           {APP_NAME} is the most trusted platform to manage digital assets.
           <br />
           Here is how to get started:
         </Typography>
 
-        <Paper
-          elevation={0}
-          sx={{
-            display: "flex",
-            maxWidth: "fit-content",
-            borderRadius: "8px",
-            boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-          }}
-        >
-          <Card
-            sx={{
-              maxWidth: "800px",
-              borderRadius: "8px",
-              boxShadow: "0",
-            }}
-          >
+        <Paper elevation={0} sx={styles.paperContainer}>
+          <Card sx={styles.cardContainer}>
             <CardContent sx={{ p: "24px 24px 0" }}>
-              <Typography gutterBottom variant="h5" sx={{ fontWeight: "bold" }}>
+              <Typography gutterBottom variant="h5" fontWeight="bold">
                 Create Wallet
               </Typography>
               <Typography variant="body1">

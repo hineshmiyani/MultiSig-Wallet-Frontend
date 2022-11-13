@@ -13,7 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Wallet from "./Wallet";
+import Wallet from "../Wallet/Wallet";
 import { useRouter } from "next/router";
 
 type Props = {

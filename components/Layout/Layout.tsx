@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import Header from "./Header";
+import { Header } from "../index";
 import { Container } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import Sidebar from "./Sidebar/Sidebar";
+import Sidebar from "../Sidebar/Sidebar/Sidebar";
 import { useRouter } from "next/router";
 import { useEthers } from "@usedapp/core";
-import { useGetWallets, useGetWalletsCount, useIsOwner } from "../hooks";
+import { useGetWallets, useGetWalletsCount, useIsOwner } from "../../hooks";
 interface Props {
   children: JSX.Element;
 }

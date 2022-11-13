@@ -15,9 +15,9 @@ import {
   Button,
 } from "@mui/material";
 import { Check, CircleOutlined } from "@mui/icons-material";
-import AccountAvatar from "../AccountAvatar";
-import { useIsTxConfirmed } from "../../hooks";
-import { contract } from "../../constants";
+import { AccountAvatar } from "../../index";
+import { useIsTxConfirmed } from "../../../hooks";
+import { contract } from "../../../constants";
 import toast from "react-hot-toast";
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({

@@ -16,12 +16,12 @@ import {
   useGetWalletName,
   useGetWallets,
   useGetWalletsCount,
-} from "../../hooks";
-import ShareIcon from "../ShareIcon";
+} from "../../../hooks";
+import { ShareIcon } from "../../index";
 import Image from "next/image";
 import { formatEther } from "@ethersproject/units";
-import MakeTransactionDialog from "./MakeTransactionDialog";
-import SideDrawer from "./SideDrawer";
+import MakeTransactionDialog from "../MakeTransactionDialog/MakeTransactionDialog";
+import SideDrawer from "../SideDrawer/SideDrawer";
 
 type Props = {};
 

@@ -10,9 +10,9 @@ import {
   Tooltip,
 } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { useGetOwners } from "../../hooks";
+import { useGetOwners } from "../../../hooks";
 import { ContentCopyRounded } from "@mui/icons-material";
-import ShareIcon from "../ShareIcon";
+import { ShareIcon } from "../../index";
 import { useRouter } from "next/router";
 
 const AddressCell = (params: GridRenderCellParams) => {
@@ -87,7 +87,7 @@ const WalletOwners: React.FC<Props> = () => {
       align: "center",
       headerAlign: "center",
       renderCell: (params: GridRenderCellParams) => (
-        <Image
+        <img
           src={params.value}
           width="34"
           height="34"

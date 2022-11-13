@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import NavButton from "./NavButton";
+import NavButton from "../NavButton/NavButton";
 import { useEthers } from "@usedapp/core";
 import Link from "next/link";
 import { KeyboardArrowDown } from "@mui/icons-material";
-import AccountDialog from "./AccountDialog";
+import { AccountDialog } from "../index";
 
 const Header = () => {
   const { library, account } = useEthers();

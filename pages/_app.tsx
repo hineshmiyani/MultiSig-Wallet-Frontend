@@ -4,7 +4,7 @@ import { Mainnet, DAppProvider, Config, Goerli } from "@usedapp/core";
 import { getDefaultProvider } from "ethers";
 import { Toaster } from "react-hot-toast";
 import { theme } from "../theme";
-import Layout from "../components/Layout";
+import { Layout } from "../components";
 import "../styles/globals.css";
 
 const config: Config = {

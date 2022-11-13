@@ -10,14 +10,11 @@ import {
   StepConnector,
 } from "@mui/material";
 import { useContractFunction, useEthers } from "@usedapp/core";
-import ConnectWallet from "./ConnectWallet";
-import NameOfWallet from "./NameOfWallet";
-import AddOwners from "./AddOwners";
-import Review from "./Review";
-import { customStepperConnector, customStepperStyles } from "../../theme";
-import { contract } from "../../constants";
+import { AddOwners, ConnectWallet, NameOfWallet, Review } from "../index";
+import { customStepperConnector, customStepperStyles } from "../../../theme";
+import { contract } from "../../../constants";
 import toast from "react-hot-toast";
-import { useGetWallets, useGetWalletsCount } from "../../hooks";
+import { useGetWallets, useGetWalletsCount } from "../../../hooks";
 
 const steps = ["Connect Wallet", "Name", "Owners and Confirmations", "Review"];
 const getStepDescription = (step: number) => {

@@ -39,7 +39,7 @@ const Login = () => {
         }}
       >
         <Stack alignItems="center">
-          <img
+          <Image
             src="/asset/images/pakitLogo.png"
             height={160}
             width={160}

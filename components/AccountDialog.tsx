@@ -22,10 +22,11 @@ import ShareIcon from "./ShareIcon";
 
 const AccountDialog = () => {
   const { library, deactivate, account } = useEthers();
-  const data = useEthers();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [tooltipTitle, setTooltipTitle] = useState<string>("Copy to clipboard");
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -64,7 +65,7 @@ const AccountDialog = () => {
         }}
       >
         <Stack py={1} px={2} spacing={1} alignItems="center">
-          <img
+          <Image
             src="/asset/images/avatar.png"
             width="60"
             height="60"

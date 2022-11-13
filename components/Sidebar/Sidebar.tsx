@@ -57,7 +57,7 @@ const Sidebar = (props: Props) => {
       }}
     >
       {/* <Box textAlign="center" p={3}>
-        <img
+        <Image
           src="/asset/images/lockWallet.svg"
           height={45}
           width={45}
@@ -100,7 +100,7 @@ const Sidebar = (props: Props) => {
         [walletList?.[+walletId]]?.map((wallet: "string") => (
           <Box key={wallet}>
             <Stack p={2} spacing={1.75} alignItems="center">
-              <img
+              <Image
                 src="/asset/images/walletAvatar.png"
                 width="48"
                 height="48"

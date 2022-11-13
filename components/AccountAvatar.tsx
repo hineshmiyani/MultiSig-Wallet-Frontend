@@ -16,7 +16,7 @@ const AccountAvatar: React.FC<Props> = ({ toAddress, truncate }) => {
 
   return (
     <Stack spacing={1.8} direction="row" alignItems="center">
-      <img
+      <Image
         src="/asset/images/avatar.png"
         width="34"
         height="34"

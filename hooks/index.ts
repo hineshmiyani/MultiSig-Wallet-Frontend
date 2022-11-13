@@ -1,4 +1,4 @@
-import { useCall, useCalls, useEtherBalance } from "@usedapp/core";
+import { useCall, useCalls } from "@usedapp/core";
 import { contract } from "../constants";
 
 export function useGetOwners(args: any[]) {

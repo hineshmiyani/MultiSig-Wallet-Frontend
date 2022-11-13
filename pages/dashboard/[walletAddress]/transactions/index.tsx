@@ -200,7 +200,7 @@ const Transactions = (props: Props) => {
                               flexBasis="25%"
                               maxWidth="25%"
                             >
-                              <img
+                              <Image
                                 src="/asset/images/ethLogo.png"
                                 height={26}
                                 width={26}
@@ -342,7 +342,7 @@ const Transactions = (props: Props) => {
                               flexBasis="25%"
                               maxWidth="25%"
                             >
-                              <img
+                              <Image
                                 src="/asset/images/ethLogo.png"
                                 height={26}
                                 width={26}

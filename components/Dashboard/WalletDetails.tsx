@@ -58,7 +58,7 @@ const WalletDetails: React.FC<Props> = () => {
           }}
         >
           <CardContent sx={{ p: "24px 24px 0", position: "relative" }}>
-            <img
+            <Image
               src="/asset/images/walletAvatar.png"
               width="48"
               height="48"

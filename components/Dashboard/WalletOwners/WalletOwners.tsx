@@ -7,6 +7,7 @@ import {
   Box,
   IconButton,
   Tooltip,
+  Skeleton,
 } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { useGetOwners } from "../../../hooks";
@@ -64,7 +65,7 @@ const AddressCell = (params: GridRenderCellParams) => {
 const WalletOwners = () => {
   const router = useRouter();
   const { id: walletId } = router?.query;
-  const [rows, setRows] = useState<any[]>([{ id: 1, avatar: "", address: "" }]);
+  const [rows, setRows] = useState<any[]>([]);
 
   const { account } = useEthers();
   const ownersList = useGetOwners([account?.toString(), walletId]);
@@ -116,9 +117,7 @@ const WalletOwners = () => {
             address: owner,
           };
         });
-      return modifyOwnerList
-        ? modifyOwnerList
-        : [{ id: 1, avatar: "", address: "" }];
+      return modifyOwnerList;
     });
   }, [ownersList]);
 
@@ -129,14 +128,29 @@ const WalletOwners = () => {
       </Typography>
       <Paper elevation={0} sx={styles.container}>
         <Box sx={styles.datagridContainer}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={3}
-            rowsPerPageOptions={[3]}
-            disableSelectionOnClick
-            disableColumnSelector
-          />
+          {rows.length > 0 ? (
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={3}
+              rowsPerPageOptions={[3]}
+              disableSelectionOnClick
+              disableColumnSelector
+            />
+          ) : (
+            <Stack spacing={0.8} p={0.5}>
+              {Array(5)
+                .fill(null)
+                .map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    variant="rounded"
+                    width="100%"
+                    height={46}
+                  />
+                ))}
+            </Stack>
+          )}
         </Box>
       </Paper>
     </>
